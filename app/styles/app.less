@@ -1,0 +1,32 @@
+@import 'script-renderer.less';
+
+html,
+body,
+.application,
+.index-container,
+.left,
+.right {
+    height: 100%;
+}
+
+h2 {
+    font-family: 'Raleway', sans-serif;
+    text-transform: capitalize;
+    font-size: 48px;
+}
+
+.left {
+    position: fixed;
+    width: 50%;
+
+    .content {
+        padding: 25px;
+    }
+}
+
+.right {
+    position: fixed;
+    width: 50%;
+    right: 0;
+    background-color: #333;
+}
