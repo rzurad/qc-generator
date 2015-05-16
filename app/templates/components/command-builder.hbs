@@ -1,0 +1,15 @@
+<div class="comment-container">
+    {{#if showComment}}
+        {{input class="comment" type="text" value=comment}}
+    {{ else }}
+        <a href="#" {{action "showComment"}}>Add comment</a>
+    {{/if}}
+</div>
+
+<div class="form-container">
+    <select class="form-control">
+        {{#each key in commandKeys}}
+            <option value={{ key }}>{{ key }}</option>
+        {{/each}}
+    </select>
+</div>
