@@ -1,12 +1,13 @@
 import Ember from 'ember';
 import { htmlToText } from '../helpers/html-to-text';
-import { TYPES, factory as commandFactory } from '../models/commands';
+import { argFactory } from '../models/args';
+import { CMD_TYPES, commandFactory } from '../models/commands';
 
 export default Ember.Component.extend({
     classNames: ['command-builder'],
     command: null,
     args: [],
-    commandKeys: Object.keys(TYPES),
+    commandKeys: Object.keys(CMD_TYPES),
     showComment: false,
 
     onShowCommentChange: function () {
@@ -16,6 +17,14 @@ export default Ember.Component.extend({
             });
         }
     }.observes('showComment'),
+
+    onCommandChange: function () {
+        var command = this.get('command');
+
+        this.set('args', command.args.map(function (key) {
+            return argFactory(key);
+        }));
+    }.observes('command'),
 
     focusOut: function (e) {
         var $target = Ember.$(e.target);

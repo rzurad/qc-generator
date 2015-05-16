@@ -18,6 +18,10 @@
             <option value={{ key }}>{{ key }}</option>
         {{/each}}
     </select>
+
+    {{#each arg in args}}
+        - {{ arg.type }} -
+    {{/each}}
 </div>
 
 <div class="command-output renderer">
