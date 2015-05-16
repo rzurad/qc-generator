@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import { htmlToText } from '../helpers/html-to-text';
 
 var COMMANDS = {
         '$modelname': ['file'],
@@ -23,8 +24,18 @@ export default Ember.Component.extend({
     focusOut: function (e) {
         var $target = Ember.$(e.target);
 
-        if ($target.is('.comment') && !$target.val().length) {
+        if ($target.is('.comment') && !htmlToText($target.html())) {
             this.set('showComment', false);
+        }
+    },
+
+    keyUp: function (e) {
+        var $target = Ember.$(e.target),
+            text;
+
+        if ($target.is('.comment')) {
+            text = htmlToText($target.html());
+            this.set('comment', text);
         }
     },
 

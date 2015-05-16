@@ -1,10 +1,10 @@
-<div class="comment-container">
-    {{#if showComment}}
-        {{input class="comment" type="text" value=comment}}
-    {{ else }}
+{{#if showComment}}
+    <div class="comment" contenteditable></div>
+{{else}}
+    <div class="comment">
         <a href="#" {{action "showComment"}}>Add comment</a>
-    {{/if}}
-</div>
+    </div>
+{{/if}}
 
 <div class="form-container">
     <select class="form-control">
