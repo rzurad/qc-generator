@@ -35,6 +35,8 @@ export default Ember.Component.extend({
 
         if ($target.is('.comment')) {
             text = htmlToText($target.html());
+            text = text.split('\n').map(function (line) { return '// ' + line; }).join('\n');
+
             this.set('comment', text);
         }
     },
