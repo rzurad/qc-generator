@@ -1,16 +1,12 @@
 import Ember from 'ember';
 import { htmlToText } from '../helpers/html-to-text';
-
-var COMMANDS = {
-        '$modelname': ['file'],
-        '$staticprop': []
-    };
+import { TYPES, factory as commandFactory } from '../models/commands';
 
 export default Ember.Component.extend({
     classNames: ['command-builder'],
     command: null,
-    commandKeys: Object.keys(COMMANDS),
-    comment: '',
+    args: [],
+    commandKeys: Object.keys(TYPES),
     showComment: false,
 
     onShowCommentChange: function () {
@@ -29,6 +25,14 @@ export default Ember.Component.extend({
         }
     },
 
+    change: function (e) {
+        var $target = Ember.$(e.target);
+
+        if ($target.is('.command')) {
+            this.set('command', commandFactory($target.val()));
+        }
+    },
+
     keyUp: function (e) {
         var $target = Ember.$(e.target),
             text;
@@ -37,7 +41,7 @@ export default Ember.Component.extend({
             text = htmlToText($target.html());
             text = text.split('\n').map(function (line) { return '// ' + line; }).join('\n');
 
-            this.set('comment', text);
+            this.set('command.comment', text);
         }
     },
 
