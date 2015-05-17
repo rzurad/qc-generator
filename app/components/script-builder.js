@@ -34,7 +34,7 @@ export default Ember.Component.extend({
                 index = commands.indexOf(command);
 
             commands.removeAt(index);
-            commands.insertAt(index, commandFactory(type));
+            commands.insertAt(index, commandFactory(type, command.get('comment')));
         },
 
         download: function () {
