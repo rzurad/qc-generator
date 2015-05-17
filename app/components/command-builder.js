@@ -11,6 +11,7 @@ export default Ember.Component.extend({
     args: [],
     commandKeys: Object.keys(CMD_TYPES),
     isContentEditable: false,
+    isCommentVisible: false,
 
     category: function () {
         return this.get('command.category');
@@ -23,12 +24,19 @@ export default Ember.Component.extend({
         // the comment text into the editable div
         if (!!comment) {
             this.set('isContentEditable', !!comment);
+            this.set('isCommentVisible', true);
+        }
+    }.on('init'),
 
+    onIsCommentVisibleChange: function () {
+        var comment = this.get('command.comment');
+
+        if (this.get('isCommentVisible') && comment) {
             Ember.run.scheduleOnce('afterRender', this, function () {
                 Ember.$(this.get('element')).find('.comment').text(comment.replace(/^\/\/\ /g, ''));
             });
         }
-    }.on('init'),
+    }.observes('isCommentVisible'),
 
     focusOut: function (e) {
         var $target = Ember.$(e.target);
@@ -66,6 +74,10 @@ export default Ember.Component.extend({
             Ember.run.scheduleOnce('afterRender', this, function () {
                 Ember.$(this.get('element')).find('.comment').focus();
             });
+        },
+
+        toggleComment: function () {
+            this.toggleProperty('isCommentVisible');
         }
     }
 });

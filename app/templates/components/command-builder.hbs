@@ -1,12 +1,14 @@
 <div class="annotation">
     <div class="pilwrap"></div>
 
-    {{#if isContentEditable}}
-        <div class="comment" contenteditable></div>
-    {{else}}
-        <div class="comment">
-            <a href="#" {{action "addComment"}}>Add comment</a>
-        </div>
+    {{#if isCommentVisible}}
+        {{#if isContentEditable}}
+            <div class="comment" contenteditable></div>
+        {{else}}
+            <div class="comment">
+                <a href="#" {{action "addComment"}}>Add comment</a>
+            </div>
+        {{/if}}
     {{/if}}
 
     <div class="form-container">
@@ -24,6 +26,8 @@
             <i {{action "drag"}} class="drag-handle fa fa-arrows"></i>
             <i {{action "deleteCommand"}} class="delete-command fa fa-times"></i>
         {{/unless}}
+
+        <i {{action "toggleComment"}} class="toggle-comment fa fa-comment"></i>
 
         <span class="category">{{ category }}</span>
     </div>

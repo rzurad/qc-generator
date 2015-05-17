@@ -317,7 +317,7 @@ ul.sections > li > div {
     }
 
     ul.sections > li > div.content {
-        padding: 9px 15px 16px 25px;
+        padding: 0px 15px 0px 25px;
     }
 }
 
@@ -339,10 +339,16 @@ ul.sections > li > div {
     position: relative;
 }
 
+.toggle-comment,
 .delete-command,
 .drag-handle {
     position: absolute;
     top: 8px;
+}
+
+.toggle-comment {
+    cursor: pointer;
+    right: 10px;
 }
 
 .drag-handle {
@@ -351,7 +357,7 @@ ul.sections > li > div {
 }
 
 .delete-command {
-    right: 10px;
+    right: 50px;
     cursor: pointer;
 
     &:hover {
