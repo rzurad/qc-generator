@@ -21,8 +21,8 @@ module.exports = function(environment) {
             },
 
             contentSecurityPolicy: {
-                'font-src': "'self' http://fonts.gstatic.com",
-                'style-src': "'self' http://fonts.googleapis.com"
+                'font-src': "'self' http://fonts.gstatic.com http://maxcdn.bootstrapcdn.com",
+                'style-src': "'self' http://fonts.googleapis.com http://maxcdn.bootstrapcdn.com"
             }
         };
 
