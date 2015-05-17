@@ -1,9 +1,10 @@
 import Ember from 'ember';
 
 var ARGS = {
-        'file': {
-            type: 'file'
-        }
+        'file': Ember.Object.extend({
+            type: 'file',
+            value: ''
+        })
     };
 
 export const ARG_TYPES = (function () {
@@ -21,7 +22,7 @@ export function argFactory(type) {
         throw new Error('Unrecognized argument type: "' + type + '"');
     }
 
-    return Ember.Object.create(ARGS[type]);
+    return (window.__arg = ARGS[type].create());
 }
 
 export default argFactory;

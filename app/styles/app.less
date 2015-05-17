@@ -137,6 +137,33 @@ ul.sections > li > div {
 
     select {
         width: 135px;
+        display: inline-block;
+    }
+
+    .argument {
+        display: inline-block;
+        padding-left: 10px;
+        border-left: 1px solid #cacaca;
+        margin-left: 10px;
+
+        .file-input {
+            position: relative;
+            display: inline-block;
+            top: -1;
+        }
+
+        &.file input {
+            display: inline-block;
+            width: 150px;
+        }
+
+        &.file input[type="file"] {
+            width: 38px;
+            height: 34px;
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+        }
     }
 }
 

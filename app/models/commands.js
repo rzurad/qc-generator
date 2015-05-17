@@ -18,7 +18,21 @@ var COMMANDS = {
             link: 'https://developer.valvesoftware.com/wiki/$staticprop',
             help: 'Specifies that the model being compiled does not have any moving parts.'
         }
-    };
+    },
+
+    Command = Ember.Object.extend({
+        output: function () {
+            var cmd = this.get('cmd'),
+                args = this.get('args');
+
+            return [cmd].concat(args.map(function (arg) {
+                switch (arg.type) {
+                    case 'file': return '"' + arg.get('value') + '"'; break;
+                    default: throw new Error('No parser for type "' + arg.type + '"');
+                }
+            })).join(' ');
+        }.property('cmd', 'args.@each.value')
+    });
 
 export const CMD_TYPES = (function () {
     var keys = {};
@@ -35,14 +49,12 @@ export function commandFactory(command, comment) {
         throw new Error('Unrecognized command: "' + command + '"');
     }
 
-    let obj = Ember.Object.create(COMMANDS[command]);
+    let obj = Command.create(COMMANDS[command]);
 
-    obj.comment = typeof comment === 'string' ? comment : '';
-    /*
-    obj.args = COMMANDS[command].args.map(function (arg) {
-        return argFactory(arg);
-    });
-    */
+    obj.set('comment', typeof comment === 'string' ? comment : '');
+    obj.set('args', obj.get('args').map(function (argkey) {
+        return argFactory(argkey);
+    }));
 
     return obj;
 }

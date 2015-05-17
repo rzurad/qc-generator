@@ -10,7 +10,9 @@ export default UiCodeHighlight.extend({
         var shadowDom = this.$('.shadow-dom').html()
                             .replace(/<\![\-]+\>/gm, '')
                             .trim()
-                            .replace(/&nbsp;/g, ' ' ),
+                            .replace(/&nbsp;/g, ' ' )
+                            .replace(/&lt;/g, '<')
+                            .replace(/&gt;/g, '>'),
             highlight;
 
         hljs.configure(this.get('configuration'));

@@ -30,14 +30,6 @@ export default Ember.Component.extend({
         }
     }.on('init'),
 
-    onCommandChange: function () {
-        var command = this.get('command');
-
-        this.set('args', command.args.map(function (key) {
-            return argFactory(key);
-        }));
-    }.observes('command'),
-
     focusOut: function (e) {
         var $target = Ember.$(e.target);
 

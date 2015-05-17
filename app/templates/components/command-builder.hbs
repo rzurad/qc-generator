@@ -1,4 +1,4 @@
-<div class="annotation" data-category={{ category }}>
+<div class="annotation">
     <div class="pilwrap"></div>
 
     {{#if isContentEditable}}
@@ -16,6 +16,10 @@
                classNames="form-control command"
         }}
 
+        {{#each arg in command.args}}
+            {{input-argument argument=arg}}
+        {{/each}}
+
         {{#unless command.required}}
             <i {{action "drag"}} class="drag-handle fa fa-arrows"></i>
             <i {{action "deleteCommand"}} class="delete-command fa fa-times"></i>
@@ -28,6 +32,6 @@
 <div class="content">
     {{#code-highlighter poll=250 language="php"}}
 {{ command.comment }}
-{{ command.cmd }}
+{{ command.output}}
     {{/code-highlighter}}
 </div>
