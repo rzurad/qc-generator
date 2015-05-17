@@ -81,6 +81,10 @@ export default Ember.Component.extend({
 
         deleteCommand: function () {
             this.sendAction('delete', this.get('command'));
+        },
+
+        help: function () {
+            window.open(this.get('command.link'));
         }
     }
 });

@@ -1,6 +1,5 @@
 import Ember from 'ember';
 import { ARG_TYPES, argFactory } from './args';
-import config from '../config/environment';
 
 var COMMANDS = {
         $modelname: {
@@ -21,7 +20,7 @@ var COMMANDS = {
         $cdmaterials: {
             cmd: '$cdmaterials',
             category: 'textures',
-            args: [ARG_TYPES.file],
+            args: [ARG_TYPES.qstring],
             link: 'https://developer.valvesoftware.com/wiki/$cdmaterials',
             help: 'Defines the folders in which the game will search for the model\'s materials relative to <code><game>\\materials\\</code>. Subfolders are not searched.'
         },
@@ -41,9 +40,13 @@ var COMMANDS = {
 
             return [cmd].concat(args.map(function (arg) {
                 switch (arg.type) {
-                    case 'file': return '"' + arg.get('value') + '"'; break;
-                    case 'string': return arg.get('value'); break;
-                    default: throw new Error('No parser for type "' + arg.type + '"');
+                    case 'file':
+                    case 'qstring': 
+                        return '"' + arg.get('value') + '"';
+                    case 'string':
+                        return arg.get('value');
+                    default:
+                        throw new Error('No parser for type "' + arg.type + '"');
                 }
             })).join(' ');
         }.property('cmd', 'args.@each.value')

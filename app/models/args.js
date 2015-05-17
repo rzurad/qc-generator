@@ -8,6 +8,10 @@ var ARGS = {
         'string': Ember.Object.extend({
             type: 'string',
             value: ''
+        }),
+        'qstring': Ember.Object.extend({
+            type: 'qstring',
+            value: ''
         })
     };
 

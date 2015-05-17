@@ -18,6 +18,8 @@
                classNames="form-control command"
         }}
 
+        <i {{action "help"}} class="help fa fa-question-circle"></i>
+
         {{#each arg in command.args}}
             {{input-argument argument=arg}}
         {{/each}}
