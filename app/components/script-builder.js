@@ -27,6 +27,23 @@ export default Ember.Component.extend({
 
         deleteCommand: function (command) {
             this.get('commands').removeObject(command);
+        },
+
+        replaceCommand: function (command, type) {
+            var commands = this.get('commands'),
+                index = commands.indexOf(command);
+
+            commands.removeAt(index);
+            commands.insertAt(index, commandFactory(type));
+        },
+
+        download: function () {
+            console.log('download');
+        },
+
+        copyToClipboard: function () {
+            //var event = new ClipboardEvent('copy', { dataType: 'text/plain', data: 'hello from the clipboard!' });
+            //document.dispatchEvent(event);
         }
     }
 });

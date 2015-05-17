@@ -4,6 +4,10 @@ var ARGS = {
         'file': Ember.Object.extend({
             type: 'file',
             value: ''
+        }),
+        'string': Ember.Object.extend({
+            type: 'string',
+            value: ''
         })
     };
 

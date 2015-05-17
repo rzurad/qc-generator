@@ -1,7 +1,6 @@
 import Ember from 'ember';
 import { htmlToText } from '../helpers/html-to-text';
-import { argFactory } from '../models/args';
-import { CMD_TYPES, commandFactory } from '../models/commands';
+import { CMD_TYPES } from '../models/commands';
 
 export default Ember.Component.extend({
     tagName: 'li',
@@ -51,7 +50,7 @@ export default Ember.Component.extend({
         var $target = Ember.$(e.target);
 
         if ($target.is('.command')) {
-            this.set('command', commandFactory($target.val(), this.get('command.comment')));
+            this.sendAction('replace', this.get('command'), $target.val());
         }
     },
 

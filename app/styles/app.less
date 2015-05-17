@@ -138,14 +138,17 @@ ul.sections > li > div {
 
     select {
         width: 135px;
+        position: absolute;
         display: inline-block;
     }
 
     .argument {
         display: inline-block;
         padding-left: 10px;
+
         border-left: 1px solid #cacaca;
-        margin-left: 10px;
+        margin-left: 150px;
+        margin-bottom: 10px;
 
         .file-input {
             position: relative;
@@ -331,19 +334,32 @@ ul.sections > li > div {
 @none: #fff;
 @fundamentals: #7e7e8c;
 @performance: #ffae00;
+@textures: #5eba38;
 
-.comment, .form-container {
-    border-left: 10px solid @none;
+.category(@color) {
+    .category {
+        background-color: @color;
+    }
+
+    .comment, .form-container {
+        border-left: 10px solid @color
+    }
+
+    .comment {
+        border-bottom: 1px solid @color;
+    }
+
+    .form-container {
+        min-height: 60px;
+        border-bottom: 3px solid @color;
+        position: relative;
+    }
 }
 
-.comment {
-    border-bottom: 1px solid @none;
-}
-
-.form-container {
-    border-bottom: 3px solid @none;
-    position: relative;
-}
+.command-builder { .category(@none); }
+.fundamentals { .category(@fundamentals); }
+.performance { .category(@performance); }
+.textures { .category(@textures); }
 
 .toggle-comment,
 .delete-command,
@@ -380,40 +396,3 @@ ul.sections > li > div {
     bottom: 0px;
     right: 0px;
 }
-
-.fundamentals {
-    .category {
-        background-color: @fundamentals;
-    }
-
-    .comment, .form-container {
-        border-left: 10px solid @fundamentals;
-    }
-
-    .comment { 
-        border-bottom: 1px solid @fundamentals;
-    }
-
-    .form-container {
-        border-bottom: 3px solid @fundamentals;
-    }
-}
-
-.performance {
-    .category {
-        background-color: @performance;
-    }
-
-    .comment, .form-container {
-        border-left: 10px solid @performance;
-    }
-
-    .comment {
-        border-bottom: 1px solid @performance;
-    }
-
-    .form-container {
-        border-bottom: 3px solid @performance;
-    }
-}
-

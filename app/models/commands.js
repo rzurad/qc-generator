@@ -10,6 +10,20 @@ var COMMANDS = {
             args: [ARG_TYPES.file],
             link: 'https://developer.valvesoftware.com/wiki/$modelname',
             help: 'Specifies the path and filename of the compiled model, relative to the <code>\\models</code> folder of the <a href="https://developer.valvesoftware.com/wiki/Game_Directory" target="_blank">Game Directory</a>.'
+        },  
+        $body: {
+            cmd: '$body',
+            category: 'fundamentals',
+            args: [ARG_TYPES.string, ARG_TYPES.file],
+            link: 'https://developer.valvesoftware.com/wiki/$body',
+            help: 'Add a reference mesh to a model.'
+        },
+        $cdmaterials: {
+            cmd: '$cdmaterials',
+            category: 'textures',
+            args: [ARG_TYPES.file],
+            link: 'https://developer.valvesoftware.com/wiki/$cdmaterials',
+            help: 'Defines the folders in which the game will search for the model\'s materials relative to <code><game>\\materials\\</code>. Subfolders are not searched.'
         },
         $staticprop: {
             cmd: '$staticprop',
@@ -28,6 +42,7 @@ var COMMANDS = {
             return [cmd].concat(args.map(function (arg) {
                 switch (arg.type) {
                     case 'file': return '"' + arg.get('value') + '"'; break;
+                    case 'string': return arg.get('value'); break;
                     default: throw new Error('No parser for type "' + arg.type + '"');
                 }
             })).join(' ');
