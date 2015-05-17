@@ -23,6 +23,10 @@ export default Ember.Component.extend({
     actions: {
         addCommand: function () {
             this.set('showNewCommandEditor', true);
+        },
+
+        deleteCommand: function (command) {
+            this.get('commands').removeObject(command);
         }
     }
 });

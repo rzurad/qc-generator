@@ -78,6 +78,10 @@ export default Ember.Component.extend({
 
         toggleComment: function () {
             this.toggleProperty('isCommentVisible');
+        },
+
+        deleteCommand: function () {
+            this.sendAction('delete', this.get('command'));
         }
     }
 });
