@@ -9,13 +9,15 @@ export default Ember.Component.extend({
     command: null,
     args: [],
     commandKeys: Object.keys(CMD_TYPES),
-    showComment: false,
+    isContentEditable: false,
 
     onInit: function () {
         var comment = this.get('command.comment');
 
+        // if there is a comment, enable contenteditable and stuff
+        // the comment text into the editable div
         if (!!comment) {
-            this.set('showComment', !!comment);
+            this.set('isContentEditable', !!comment);
 
             Ember.run.scheduleOnce('afterRender', this, function () {
                 Ember.$(this.get('element')).find('.comment').text(comment.replace(/^\/\/\ /g, ''));
@@ -35,7 +37,8 @@ export default Ember.Component.extend({
         var $target = Ember.$(e.target);
 
         if ($target.is('.comment') && !htmlToText($target.html())) {
-            this.set('showComment', false);
+            this.set('isContentEditable', false);
+            this.set('command.comment', '');
         }
     },
 
@@ -61,7 +64,7 @@ export default Ember.Component.extend({
 
     actions: {
         addComment: function () {
-            this.set('showComment', true);
+            this.set('isContentEditable', true);
 
             Ember.run.scheduleOnce('afterRender', this, function () {
                 Ember.$(this.get('element')).find('.comment').focus();

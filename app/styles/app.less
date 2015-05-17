@@ -120,173 +120,6 @@ ul.sections > li > div {
     box-sizing: border-box;
 }
 
-/*---------------------- Low resolutions (> 320px) ---------------------*/
-@media only screen and (min-width: 320px) {
-  .pilwrap { display: none; }
-
-  ul.sections > li > div {
-    display: block;
-    padding:5px 10px 0 10px;
-  }
-
-  ul.sections > li > div.annotation ul, ul.sections > li > div.annotation ol {
-    padding-left: 30px;
-  }
-
-  ul.sections > li > div.content {
-    overflow-x:auto;
-    -webkit-box-shadow: inset 0 0 5px #e5e5ee;
-    box-shadow: inset 0 0 5px #e5e5ee;
-    border: 1px solid #dedede;
-    margin:5px 10px 5px 10px;
-    padding-bottom: 5px;
-  }
-
-  ul.sections > li > div.annotation pre {
-    margin: 7px 0 7px;
-    padding-left: 15px;
-  }
-
-  ul.sections > li > div.annotation p tt, .annotation code {
-    background: #f8f8ff;
-    border: 1px solid #dedede;
-    font-size: 12px;
-    padding: 0 0.2em;
-  }
-}
-
-/*----------------------  (> 481px) ---------------------*/
-@media only screen and (min-width: 481px) {
-  #container {
-    position: relative;
-  }
-  body {
-    background-color: #333;
-    font-size: 15px;
-    line-height: 21px;
-  }
-  pre, tt, code {
-    line-height: 18px;
-  }
-  p, ul, ol {
-    margin: 0 0 15px;
-  }
-
-
-  #jump_to {
-    padding: 5px 10px;
-  }
-  #jump_wrapper {
-    padding: 0;
-  }
-  #jump_to, #jump_page {
-    font: 10px Arial;
-    text-transform: uppercase;
-  }
-  #jump_page .source {
-    padding: 5px 10px;
-  }
-  #jump_to a.large {
-    display: inline-block;
-  }
-  #jump_to a.small {
-    display: none;
-  }
-
-
-
-  #background {
-    position: absolute;
-    top: 0; bottom: 0;
-    width: 350px;
-    background: #fff;
-    border-right: 1px solid #e5e5ee;
-    z-index: -1;
-  }
-
-  ul.sections > li > div.annotation ul, ul.sections > li > div.annotation ol {
-    padding-left: 40px;
-  }
-
-  ul.sections > li {
-    white-space: nowrap;
-  }
-
-  ul.sections > li > div {
-    display: inline-block;
-  }
-
-  ul.sections > li > div.annotation {
-    max-width: 350px;
-    min-width: 350px;
-    min-height: 5px;
-    padding: 13px;
-    overflow-x: hidden;
-    white-space: normal;
-    vertical-align: top;
-    text-align: left;
-  }
-  ul.sections > li > div.annotation pre {
-    margin: 15px 0 15px;
-    padding-left: 15px;
-  }
-
-  ul.sections > li > div.content {
-    padding: 13px;
-    vertical-align: top;
-    border: none;
-    -webkit-box-shadow: none;
-    box-shadow: none;
-  }
-
-  .pilwrap {
-    position: relative;
-    display: inline;
-  }
-
-  .pilcrow {
-    font: 12px Arial;
-    text-decoration: none;
-    color: #454545;
-    position: absolute;
-    top: 3px; left: -20px;
-    padding: 1px 2px;
-    opacity: 0;
-    -webkit-transition: opacity 0.2s linear;
-  }
-    .for-h1 .pilcrow {
-      top: 47px;
-    }
-    .for-h2 .pilcrow, .for-h3 .pilcrow, .for-h4 .pilcrow {
-      top: 35px;
-    }
-
-  ul.sections > li > div.annotation:hover .pilcrow {
-    opacity: 1;
-  }
-}
-
-/*---------------------- (> 1025px) ---------------------*/
-@media only screen and (min-width: 1025px) {
-
-  body {
-    font-size: 16px;
-    line-height: 24px;
-  }
-
-  #background {
-    width: 525px;
-  }
-  ul.sections > li > div.annotation {
-    max-width: 525px;
-    min-width: 525px;
-    padding: 10px 25px 1px 50px;
-  }
-  ul.sections > li > div.content {
-    padding: 9px 15px 16px 25px;
-  }
-}
-
 .command-builder {
     .form-container,
     .comment {
@@ -301,5 +134,155 @@ ul.sections > li > div {
 
     select {
         width: 135px;
+    }
+}
+
+/*---------------------- Low resolutions (> 320px) ---------------------*/
+@media only screen and (min-width: 320px) {
+    .pilwrap {
+        display: none;
+    }
+
+    ul.sections > li > div {
+        display: block;
+        padding: 5px 10px 0px 10px;
+    }
+
+    ul.sections > li > div.annotation ul, ul.sections > li > div.annotation ol {
+        padding-left: 30px;
+    }
+
+    ul.sections > li > div.content {
+        overflow-x: auto;
+        margin-left: 10px;
+        background-color: #333;
+    }
+
+    ul.sections > li > div.annotation pre {
+        margin: 7px 0px 7px;
+        padding-left: 15px;
+    }
+
+    ul.sections > li > div.annotation p tt, .annotation code {
+        background: #f8f8ff;
+        border: 1px solid #dedede;
+        font-size: 12px;
+        padding: 0px 0.2em;
+    }
+}
+
+/*----------------------  (> 481px) ---------------------*/
+@media only screen and (min-width: 481px) {
+    #container {
+        position: relative;
+    }
+
+    body {
+        background-color: #333;
+        font-size: 15px;
+        line-height: 21px;
+    }
+
+    pre, tt, code {
+        line-height: 18px;
+    }
+
+    p, ul, ol {
+        margin: 0px 0px 15px;
+    }
+
+    #background {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        width: 350px;
+        background: #fff;
+        z-index: -1;
+    }
+
+    ul.sections > li > div.annotation ul, ul.sections > li > div.annotation ol {
+        padding-left: 40px;
+    }
+
+    ul.sections > li {
+        white-space: nowrap;
+    }
+
+    ul.sections > li > div {
+        display: inline-block;
+    }
+
+    ul.sections > li > div.annotation {
+        max-width: 350px;
+        min-width: 350px;
+        min-height: 5px;
+        padding: 13px;
+        overflow-x: hidden;
+        white-space: normal;
+        vertical-align: top;
+        text-align: left;
+    }
+
+    ul.sections > li > div.annotation pre {
+        margin: 15px 0px 15px;
+        padding-left: 15px;
+    }
+
+    ul.sections > li > div.content {
+        padding: 13px;
+        vertical-align: top;
+        border: none;
+        -webkit-box-shadow: none;
+        box-shadow: none;
+    }
+
+    .pilwrap {
+        position: relative;
+        display: inline;
+    }
+
+    .pilcrow {
+        font: 12px Arial;
+        text-decoration: none;
+        color: #454545;
+        position: absolute;
+        top: 3px; left: -20px;
+        padding: 1px 2px;
+        opacity: 0;
+        -webkit-transition: opacity 0.2s linear;
+    }
+
+    .for-h1 .pilcrow {
+        top: 47px;
+    }
+
+    .for-h2 .pilcrow, .for-h3 .pilcrow, .for-h4 .pilcrow {
+        top: 35px;
+    }
+
+    ul.sections > li > div.annotation:hover .pilcrow {
+        opacity: 1;
+    }
+}
+
+/*---------------------- (> 1025px) ---------------------*/
+@media only screen and (min-width: 1025px) {
+    body {
+        font-size: 14px;
+        line-height: 24px;
+    }
+
+    #background {
+        width: 525px;
+    }
+
+    ul.sections > li > div.annotation {
+        max-width: 525px;
+        min-width: 525px;
+        padding: 10px 40px 1px 50px;
+    }
+
+    ul.sections > li > div.content {
+        padding: 9px 15px 16px 25px;
     }
 }
