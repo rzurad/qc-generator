@@ -1,31 +1,30 @@
-{{#if showComment}}
-    <div class="comment" contenteditable></div>
+<div class="annotation">
+    <div class="pilwrap"></div>
 
-    <div class="comment-output renderer">
-        {{#code-highlighter poll=250 language="php"}}
-            {{ command.comment }}
-        {{/code-highlighter}}
-    </div>
-{{else}}
-    <div class="comment">
-        <a href="#" {{action "showComment"}}>Add comment</a>
-    </div>
-{{/if}}
+    {{#if showComment}}
+        <div class="comment" contenteditable></div>
+    {{else}}
+        <div class="comment">
+            <a href="#" {{action "addComment"}}>Add comment</a>
+        </div>
+    {{/if}}
 
-<div class="form-container">
-    <select class="command form-control">
-        {{#each key in commandKeys}}
-            <option value={{ key }}>{{ key }}</option>
+    <div class="form-container">
+        <select class="command form-control">
+            {{#each key in commandKeys}}
+                <option value={{ key }}>{{ key }}</option>
+            {{/each}}
+        </select>
+
+        {{#each arg in args}}
+            - {{ arg.type }} -
         {{/each}}
-    </select>
-
-    {{#each arg in args}}
-        - {{ arg.type }} -
-    {{/each}}
+    </div>
 </div>
 
-<div class="command-output renderer">
+<div class="content">
     {{#code-highlighter poll=250 language="php"}}
-        {{ command.cmd }}
+{{ command.comment }}
+{{ command.cmd }}
     {{/code-highlighter}}
 </div>
