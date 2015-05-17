@@ -133,7 +133,6 @@ ul.sections > li > div {
 
     .comment {
         font-size: 10px;
-        border-bottom: 1px solid #ccc;
     }
 
     select {
@@ -149,7 +148,7 @@ ul.sections > li > div {
 
     ul.sections > li > div {
         display: block;
-        padding: 5px 10px 0px 10px;
+        padding: 0px 10px 0px 10px;
     }
 
     ul.sections > li > div.annotation ul, ul.sections > li > div.annotation ol {
@@ -283,10 +282,99 @@ ul.sections > li > div {
     ul.sections > li > div.annotation {
         max-width: 525px;
         min-width: 525px;
-        padding: 10px 40px 1px 50px;
+        padding: 10px 40px 0px 50px;
+    }
+
+    ul.sections > li.command-builder > div.annotation {
+        padding-top: 0px;
     }
 
     ul.sections > li > div.content {
         padding: 9px 15px 16px 25px;
     }
 }
+
+/* Categories */
+@none: #fff;
+@fundamentals: #7e7e8c;
+@performance: #ffae00;
+
+.comment, .form-container {
+    border-left: 10px solid @none;
+}
+
+.comment {
+    border-bottom: 1px solid @none;
+}
+
+.form-container {
+    border-bottom: 3px solid @none;
+    position: relative;
+}
+
+.delete-command,
+.drag-handle {
+    position: absolute;
+    top: 8px;
+}
+
+.drag-handle {
+    right: 30px;
+    cursor: move;
+}
+
+.delete-command {
+    right: 10px;
+    cursor: pointer;
+
+    &:hover {
+        color: #db524b;
+    }
+}
+
+.category {
+    text-transform: uppercase;
+    font-size: 8px;
+    color: #fff;
+    padding: 0px 8px;
+    position: absolute;
+    bottom: 0px;
+    right: 0px;
+}
+
+.fundamentals {
+    .category {
+        background-color: @fundamentals;
+    }
+
+    .comment, .form-container {
+        border-left: 10px solid @fundamentals;
+    }
+
+    .comment { 
+        border-bottom: 1px solid @fundamentals;
+    }
+
+    .form-container {
+        border-bottom: 3px solid @fundamentals;
+    }
+}
+
+.performance {
+    .category {
+        background-color: @performance;
+    }
+
+    .comment, .form-container {
+        border-left: 10px solid @performance;
+    }
+
+    .comment {
+        border-bottom: 1px solid @performance;
+    }
+
+    .form-container {
+        border-bottom: 3px solid @performance;
+    }
+}
+

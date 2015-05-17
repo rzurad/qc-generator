@@ -6,14 +6,14 @@ var COMMANDS = {
         $modelname: {
             cmd: '$modelname',
             required: true,
-            category: 'Fundamentals',
+            category: 'fundamentals',
             args: [ARG_TYPES.file],
             link: 'https://developer.valvesoftware.com/wiki/$modelname',
             help: 'Specifies the path and filename of the compiled model, relative to the <code>\\models</code> folder of the <a href="https://developer.valvesoftware.com/wiki/Game_Directory" target="_blank">Game Directory</a>.'
         },
         $staticprop: {
             cmd: '$staticprop',
-            category: 'Performance',
+            category: 'performance',
             args: [],
             link: 'https://developer.valvesoftware.com/wiki/$staticprop',
             help: 'Specifies that the model being compiled does not have any moving parts.'

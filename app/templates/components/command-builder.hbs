@@ -1,4 +1,4 @@
-<div class="annotation">
+<div class="annotation" data-category={{ category }}>
     <div class="pilwrap"></div>
 
     {{#if isContentEditable}}
@@ -10,15 +10,18 @@
     {{/if}}
 
     <div class="form-container">
-        <select class="command form-control">
-            {{#each key in commandKeys}}
-                <option value={{ key }}>{{ key }}</option>
-            {{/each}}
-        </select>
+        {{view "select"
+               content=commandKeys
+               value=command.cmd
+               classNames="form-control command"
+        }}
 
-        {{#each arg in args}}
-            - {{ arg.type }} -
-        {{/each}}
+        {{#unless command.required}}
+            <i {{action "drag"}} class="drag-handle fa fa-arrows"></i>
+            <i {{action "deleteCommand"}} class="delete-command fa fa-times"></i>
+        {{/unless}}
+
+        <span class="category">{{ category }}</span>
     </div>
 </div>
 

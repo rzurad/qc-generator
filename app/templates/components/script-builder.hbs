@@ -2,6 +2,24 @@
     {{command-builder command=command}}
 {{/each}}
 
+{{#if showNewCommandEditor}}
+    <li id="new-command" class="command-builder">
+        <div class="annotation">
+            <div class="comment">Select a command:</div>
+
+            <div class="form-container">
+                <select class="command form-control">
+                    <option disabled selected>Select...</option>
+
+                    {{#each key in commandKeys}}
+                        <option value={{ key }}>{{ key }}</option>
+                    {{/each}}
+                </select>
+            </div>
+        </div>
+    </li>
+{{/if}}
+
 <li id="add-command">
     <div class="annotation">
         <button {{action "download"}} type="button" class="btn btn-default">

@@ -6,10 +6,15 @@ import { CMD_TYPES, commandFactory } from '../models/commands';
 export default Ember.Component.extend({
     tagName: 'li',
     classNames: ['command-builder'],
+    classNameBindings: ['category'],
     command: null,
     args: [],
     commandKeys: Object.keys(CMD_TYPES),
     isContentEditable: false,
+
+    category: function () {
+        return this.get('command.category');
+    }.property('command'),
 
     onInit: function () {
         var comment = this.get('command.comment');
