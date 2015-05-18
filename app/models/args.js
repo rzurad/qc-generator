@@ -1,36 +1,37 @@
 import Ember from 'ember';
 
-var ARGS = {
-        'file': Ember.Object.extend({
-            type: 'file',
-            value: ''
-        }),
-        'string': Ember.Object.extend({
-            type: 'string',
-            value: ''
-        }),
-        'qstring': Ember.Object.extend({
-            type: 'qstring',
-            value: ''
-        })
-    };
-
-export const ARG_TYPES = (function () {
-    var keys = {};
-
-    Object.keys(ARGS).forEach(function (key) {
-        keys[key] = key;
+var Argument = Ember.Object.extend({
+        type: null,
+        value: null,
+        label: 'Argument X',
+        'default': null
     });
 
-    return keys;
-}());
+export const ARG_TYPES = {
+    'file': 'file',
+    'string': 'string',
+    'qstring': 'qstring'
+};
 
-export function argFactory(type) {
-    if (!(type in ARGS)) {
+export function argFactory(obj) {
+    if (!(obj.type in ARG_TYPES)) {
         throw new Error('Unrecognized argument type: "' + type + '"');
     }
 
-    return (window.__arg = ARGS[type].create());
+    let ret = Argument.create(obj);
+
+    if (obj.value === void 0) {
+        // assign a default value
+        switch (obj.type) {
+            case ARG_TYPES.file:
+            case ARG_TYPES.string:
+            case ARG_TYPES.qstring:
+                ret.set('value', '');
+                break;
+        }
+    }
+
+    return ret;
 }
 
 export default argFactory;
