@@ -28,11 +28,15 @@ export default Ember.Component.extend({
         var arr = [];
 
         this.get('commands').forEach(function (cmd) {
-            if (cmd.get('comment')) {
-                arr.push(cmd.get('comment'));
+            var output,
+                comment = cmd.get('comment');
+
+            if (comment) {
+                arr.push(comment);
             }
 
-            arr.push(cmd.get('output'));
+            output = cmd.get('output');
+            arr.push(comment ? output + '\r\n' : output);
         });
 
         return arr;
