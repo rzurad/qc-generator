@@ -12,6 +12,7 @@ body {
 }
 
 .application {
+    position: relative;
     min-height: 100%;    
 }
 
@@ -29,6 +30,7 @@ p {
 
 #add-command {
     margin-top: 35px;
+    margin-bottom: 35px;
 }
 
 .annotation ul, .annotation ol {
@@ -186,6 +188,10 @@ ul.sections > li > div {
         display: none;
     }
 
+    ul.sections > li {
+        margin-right: 10px;
+    }
+
     ul.sections > li > div {
         display: block;
         padding: 0px 10px 0px 10px;
@@ -218,8 +224,8 @@ ul.sections > li > div {
     }
 }
 
-/*----------------------  (> 600px) ---------------------*/
-@media only screen and (min-width: 600px) {
+/*----------------------  (> 720px) ---------------------*/
+@media only screen and (min-width: 720px) {
     html {
         height: 100%;
     }
@@ -247,6 +253,10 @@ ul.sections > li > div {
         width: 525px;
         background: #fff;
         z-index: -1;
+    }
+
+    ul.sections > li {
+        margin-right: 0px;
     }
 
     ul.sections > li > div.annotation ul, ul.sections > li > div.annotation ol {

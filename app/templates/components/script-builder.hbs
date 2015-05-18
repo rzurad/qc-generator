@@ -22,9 +22,11 @@
 
 <li id="add-command">
     <div class="annotation">
-        <button {{action "download"}} type="button" class="btn btn-default">
-            <i class="fa fa-download"></i> Download
-        </button>
+        {{#if isDownloadAvailable}}
+            <button {{action "download"}} type="button" class="btn btn-default">
+                <i class="fa fa-download"></i> Download
+            </button>
+        {{/if}}
 
         <button {{action "copyToClipboard"}} type="button" class="btn btn-default">
             <i class="fa fa-files-o"></i> Copy to Clipboard
