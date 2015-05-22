@@ -1,13 +1,12 @@
 import Ember from 'ember';
 import { htmlToText } from '../helpers/html-to-text';
-import { COMMANDS } from '../models/commands';
 
 export default Ember.Component.extend({
     tagName: 'li',
     classNames: ['command-builder'],
     classNameBindings: ['category'],
     command: null,
-    commands: Object.keys(COMMANDS).map(function (key) { return COMMANDS[key]; }),
+    commands: null,
     isContentEditable: false,
     isCommentVisible: false,
 

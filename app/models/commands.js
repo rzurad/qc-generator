@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import deepFreeze from '../helpers/deep-freeze';
 import { ARG_TYPES, argFactory } from './args';
 
 var CATEGORIES = {
@@ -9,13 +10,15 @@ var CATEGORIES = {
     },
     
     CMDS = {
-        $modelname: {
-            cmd: '$modelname',
-            required: true,
+        $body: {
+            cmd: '$body',
             category: CATEGORIES.fundamentals,
-            args: [{ type: ARG_TYPES.file, label: 'MDL file path' }],
-            link: 'https://developer.valvesoftware.com/wiki/$modelname',
-            help: 'Specifies the path and filename of the compiled model, relative to the <code>\\models</code> folder of the <a href="https://developer.valvesoftware.com/wiki/Game_Directory" target="_blank">Game Directory</a>.'
+            args: [
+                { type: ARG_TYPES.string, label: 'name' },
+                { type: ARG_TYPES.file, label: 'SMD file' }
+            ],
+            link: 'https://developer.valvesoftware.com/wiki/$body',
+            help: 'Add a reference mesh to a model.'
         },
         $model: {
             cmd: '$model',
@@ -28,22 +31,13 @@ var CATEGORIES = {
             incomplete: true,
             help: 'Specifies a reference SMD file to be used as part of a complex model.'
         },
-        $body: {
-            cmd: '$body',
+        $modelname: {
+            cmd: '$modelname',
+            required: true,
             category: CATEGORIES.fundamentals,
-            args: [
-                { type: ARG_TYPES.string, label: 'name' },
-                { type: ARG_TYPES.file, label: 'SMD file' }
-            ],
-            link: 'https://developer.valvesoftware.com/wiki/$body',
-            help: 'Add a reference mesh to a model.'
-        },
-        $cdmaterials: {
-            cmd: '$cdmaterials',
-            category: CATEGORIES.textures,
-            args: [{ type: ARG_TYPES.qstring, label: 'Materials folder path', many: true }],
-            link: 'https://developer.valvesoftware.com/wiki/$cdmaterials',
-            help: 'Defines the folders in which the game will search for the model\'s materials relative to <code><game>\\materials\\</code>. Subfolders are not searched.'
+            args: [{ type: ARG_TYPES.file, label: 'MDL file path' }],
+            link: 'https://developer.valvesoftware.com/wiki/$modelname',
+            help: 'Specifies the path and filename of the compiled model, relative to the <code>\\models</code> folder of the <a href="https://developer.valvesoftware.com/wiki/Game_Directory" target="_blank">Game Directory</a>.'
         },
         $staticprop: {
             cmd: '$staticprop',
@@ -52,10 +46,17 @@ var CATEGORIES = {
             link: 'https://developer.valvesoftware.com/wiki/$staticprop',
             help: 'Specifies that the model being compiled does not have any moving parts.'
         },
+        $cdmaterials: {
+            cmd: '$cdmaterials',
+            category: CATEGORIES.textures,
+            args: [{ type: ARG_TYPES.qstring, label: 'Materials folder path', many: true }],
+            link: 'https://developer.valvesoftware.com/wiki/$cdmaterials',
+            help: 'Defines the folders in which the game will search for the model\'s materials relative to <code><game>\\materials\\</code>. Subfolders are not searched.'
+        },
         $scale: {
             cmd: '$scale',
             category: CATEGORIES.utility,
-            args: [{ type: ARG_TYPES.float, label: 'Multiplier' }],
+            args: [{ type: ARG_TYPES.float, label: 'Multiplier', 'default': 1 }],
             link: 'https://developer.valvesoftware.com/wiki/$scale',
             help: 'Multiplies the size of all subsequent SMDs.'
         },
@@ -99,6 +100,8 @@ var CATEGORIES = {
         }.property('cmd', 'args.@each.value')
     });
 
+deepFreeze(CMDS);
+
 export const COMMANDS = CMDS;
 
 export const CMD_TYPES = (function () {
@@ -108,7 +111,7 @@ export const CMD_TYPES = (function () {
         keys[key] = key;
     });
 
-    return keys;
+    return deepFreeze(keys);
 }());
 
 export function commandFactory(command, comment) {
@@ -116,7 +119,9 @@ export function commandFactory(command, comment) {
         throw new Error('Unrecognized command: "' + command + '"');
     }
 
-    let obj = Command.create(COMMANDS[command]);
+    // COMMANDS is deeply frozen, so create a deep clone of the command schema object
+    // so that Ember won't freak out if it tries to add meta properties to it
+    let obj = Command.create(Ember.$.extend(true, {}, COMMANDS[command]));
 
     obj.set('comment', typeof comment === 'string' ? comment : '');
     obj.set('args', obj.get('args').map(function (obj) {

@@ -43,11 +43,13 @@ export function argFactory(obj) {
             switch (obj.type) {
                 case ARG_TYPES.int:
                 case ARG_TYPES.float:
+                    ret.set('default', 0);
                     ret.set('value', 0);
                     break;
                 case ARG_TYPES.file:
                 case ARG_TYPES.string:
                 case ARG_TYPES.qstring:
+                    ret.set('default', '');
                     ret.set('value', '');
                     break;
                 case ARG_TYPES.enum:

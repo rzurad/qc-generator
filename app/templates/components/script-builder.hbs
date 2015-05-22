@@ -1,5 +1,5 @@
-{{#each command in commands}}
-    {{command-builder command=command delete="deleteCommand" replace="replaceCommand"}}
+{{#each command in script}}
+    {{command-builder command=command commands=commands delete="deleteCommand" replace="replaceCommand"}}
 {{/each}}
 
 {{#if showNewCommandEditor}}
@@ -8,13 +8,13 @@
             <div class="comment">Select a command:</div>
 
             <div class="form-container">
-                <select class="command form-control">
-                    <option disabled selected>Select...</option>
-
-                    {{#each key in commandKeys}}
-                        <option value={{ key }}>{{ key }}</option>
-                    {{/each}}
-                </select>
+                {{view "select" content=commands
+                                prompt="Select..."
+                                classNames="form-control command"
+                                optionValuePath="content.cmd"
+                                optionLabelPath="content.cmd"
+                                optionGroupPath="category"
+                }}
             </div>
         </div>
     </li>
