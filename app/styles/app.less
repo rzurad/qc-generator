@@ -143,13 +143,14 @@ ul.sections > li > div {
         font-size: 10px;
     }
 
-    select {
+    select.command {
         width: 135px;
         position: absolute;
         display: inline-block;
     }
 
     .argument {
+        position: relative;
         display: inline-block;
         padding-left: 10px;
 
@@ -160,7 +161,7 @@ ul.sections > li > div {
         .file-input {
             position: relative;
             display: inline-block;
-            top: -1;
+            top: -1px;
         }
 
         &.file input {
@@ -174,6 +175,35 @@ ul.sections > li > div {
             position: absolute;
             opacity: 0;
             cursor: pointer;
+        }
+
+        &:first-of-type {
+            .remove {
+                display: none;
+            }
+
+            .add {
+                display: inline-block;
+            }
+        }
+
+        .add {
+            display: none;
+        }
+
+        .add-remove-row {
+            position: absolute;
+            top: 7px;
+            right: -20px;
+
+            i {
+                -webkit-user-select: none;
+                -moz-user-select: none;
+                -ms-user-select: none;
+                user-select: none;
+                -khtml-user-select: none;
+                cursor: pointer;
+            }
         }
     }
 }
@@ -334,6 +364,7 @@ ul.sections > li > div {
 @fundamentals: #7e7e8c;
 @performance: #ffae00;
 @textures: #5eba38;
+@utility: #cd82e2;
 
 .category(@color) {
     .category {
@@ -359,6 +390,7 @@ ul.sections > li > div {
 .fundamentals { .category(@fundamentals); }
 .performance { .category(@performance); }
 .textures { .category(@textures); }
+.utility { .category(@utility); }
 
 .toggle-comment,
 .delete-command,

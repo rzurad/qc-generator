@@ -11,5 +11,15 @@ export default Ember.Component.extend({
         if ($target.is('input[type="file"]') && e.target.files.length) {
             this.set('argument.value', '<subdirectory>\\' + e.target.files[0].name);
         }
+    },
+
+    actions: {
+        add: function () {
+            this.sendAction('add', this.get('argument'));
+        },
+
+        remove: function () {
+            this.sendAction('remove', this.get('argument'));
+        }
     }
 });

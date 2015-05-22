@@ -1,1 +1,8 @@
 {{partial argument.type}}
+
+{{#if argument.many}}
+    <div class="add-remove-row">
+        <i {{action "add"}} class="add fa fa-plus-circle"></i>
+        <i {{action "remove"}} class="remove fa fa-minus-circle"></i>
+    </div>
+{{/if}}

@@ -1,19 +1,18 @@
 import Ember from 'ember';
 import { htmlToText } from '../helpers/html-to-text';
-import { CMD_TYPES } from '../models/commands';
+import { COMMANDS } from '../models/commands';
 
 export default Ember.Component.extend({
     tagName: 'li',
     classNames: ['command-builder'],
     classNameBindings: ['category'],
     command: null,
-    args: [],
-    commandKeys: Object.keys(CMD_TYPES),
+    commands: Object.keys(COMMANDS).map(function (key) { return COMMANDS[key]; }),
     isContentEditable: false,
     isCommentVisible: false,
 
     category: function () {
-        return this.get('command.category');
+        return this.get('command.category').toLowerCase();
     }.property('command'),
 
     onInit: function () {
@@ -60,6 +59,8 @@ export default Ember.Component.extend({
 
         if ($target.is('.comment')) {
             text = htmlToText($target.html());
+
+            // just straight newlines here, because we're still in-browser
             text = text.split('\n').map(function (line) { return '// ' + line; }).join('\n');
 
             this.set('command.comment', text);
@@ -85,6 +86,20 @@ export default Ember.Component.extend({
 
         help: function () {
             window.open(this.get('command.link'));
+        },
+
+        duplicateArg: function (arg) {
+            var clone = Ember.copy(arg);
+
+            clone.set('value', clone.get('default'));
+            this.get('command.args').pushObject(clone);
+        },
+
+        removeArg: function (arg) {
+            var args = this.get('command.args'),
+                idx = args.indexOf(arg);
+
+            args.removeAt(idx);
         }
     }
 });

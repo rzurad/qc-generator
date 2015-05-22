@@ -13,15 +13,18 @@
 
     <div class="form-container">
         {{view "select"
-               content=commandKeys
+               content=commands
                value=command.cmd
                classNames="form-control command"
+               optionValuePath="content.cmd"
+               optionLabelPath="content.cmd"
+               optionGroupPath="category"
         }}
 
         <i {{action "help"}} class="help fa fa-question-circle"></i>
 
         {{#each arg in command.args}}
-            {{input-argument argument=arg}}
+            {{input-argument argument=arg add="duplicateArg" remove="removeArg"}}
         {{/each}}
 
         {{#unless command.required}}
