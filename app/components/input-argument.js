@@ -5,9 +5,12 @@ export default Ember.Component.extend({
     classNameBindings: ['argument.type', 'isInvalid'],
     value: '',
 
+    // Has the user interacted with this input field yet?
+    isTouched: false,
+
     isInvalid: function () {
-        return !this.get('argument.isValid');
-    }.property('argument.isValid'),
+        return this.get('isTouched') && !this.get('argument.isValid');
+    }.property('argument.isValid', 'isTouched'),
 
     onValueChange: function () {
         this.set('argument.value', this.get('value').trim());
@@ -38,6 +41,14 @@ export default Ember.Component.extend({
 
         remove: function () {
             this.sendAction('remove', this.get('argument'));
+        },
+
+        blur: function () {
+            this.validateArgument();
+
+            if (!this.get('isTouched')) {
+                this.set('isTouched', true);
+            }
         }
     }
 });

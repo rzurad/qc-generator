@@ -1,5 +1,9 @@
 {{#each command in script}}
-    {{command-builder command=command commands=commands delete="deleteCommand" replace="replaceCommand"}}
+    {{command-builder command=command
+                      commands=commands
+                      delete="deleteCommand"
+                      replace="replaceCommand"
+    }}
 {{/each}}
 
 {{#if showNewCommandEditor}}

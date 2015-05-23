@@ -62,6 +62,10 @@ export default Ember.Component.extend({
 
     validateScript: function () {
         this.get('childViews').forEach(function (cmdComponent) {
+            cmdComponent.get('command.args').forEach(function (arg) {
+                arg.validate();
+            });
+
             cmdComponent.send('validation');
         });
     },
