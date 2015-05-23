@@ -34,9 +34,9 @@
 
         <i {{action "toggleComment"}} class="toggle-comment fa fa-comment"></i>
 
-        {{#if isInvalid}}
+        {{#unless isValid}}
             <span class="error-label">ERROR</span>
-        {{/if}}
+        {{/unless}}
         <span class="category">{{ category }}</span>
     </div>
 </div>

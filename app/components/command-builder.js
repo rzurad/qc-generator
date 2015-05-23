@@ -4,12 +4,12 @@ import { htmlToText } from '../helpers/html-to-text';
 export default Ember.Component.extend({
     tagName: 'li',
     classNames: ['command-builder'],
-    classNameBindings: ['category', 'isInvalid'],
+    classNameBindings: ['category', 'isValid::is-invalid'],
     command: null,
     commands: null,
     isContentEditable: false,
     isCommentVisible: false,
-    isInvalid: false,
+    isValid: true,
 
     category: function () {
         return this.get('command.category').toLowerCase();
@@ -103,7 +103,7 @@ export default Ember.Component.extend({
         },
 
         validation: function () {
-            this.set('isInvalid', !this.get('command.args').every(function (arg) {
+            this.set('isValid', this.get('command.args').every(function (arg) {
                 return arg.get('isValid');
             }));
         }
