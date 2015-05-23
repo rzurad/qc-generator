@@ -13,20 +13,39 @@ var CATEGORIES = {
         $body: {
             cmd: '$body',
             category: CATEGORIES.fundamentals,
-            args: [
-                { type: ARG_TYPES.string, label: 'name' },
-                { type: ARG_TYPES.file, label: 'SMD file' }
-            ],
+            args: [{
+                type: ARG_TYPES.string,
+                label: 'name',
+                validations: {
+                    value: { presence: true }
+                }
+            }, {
+                type: ARG_TYPES.file,
+                label: 'SMD file',
+                validations: {
+                    value: { presence: true }
+                }
+            }],
             link: 'https://developer.valvesoftware.com/wiki/$body',
             help: 'Add a reference mesh to a model.'
         },
         $model: {
             cmd: '$model',
             category: CATEGORIES.fundamentals,
-            args: [
-                { type: ARG_TYPES.qstring, label: 'name', 'default': 'body' },
-                { type: ARG_TYPES.file, label: 'SMD file' }
-            ],
+            args: [{
+                type: ARG_TYPES.qstring,
+                label: 'name',
+                'default': 'body',
+                validations: {
+                    value: { presence: true }
+                }
+            }, {
+                type: ARG_TYPES.file,
+                label: 'SMD file',
+                validations: {
+                    value: { presence: true }
+                }
+            }],
             link: 'https://developer.valvesoftware.com/wiki/$model',
             incomplete: true,
             help: 'Specifies a reference SMD file to be used as part of a complex model.'
@@ -35,7 +54,13 @@ var CATEGORIES = {
             cmd: '$modelname',
             required: true,
             category: CATEGORIES.fundamentals,
-            args: [{ type: ARG_TYPES.file, label: 'MDL file path' }],
+            args: [{
+                type: ARG_TYPES.file,
+                label: 'MDL file path',
+                validations: {
+                    value: { presence: true }
+                }
+            }],
             link: 'https://developer.valvesoftware.com/wiki/$modelname',
             help: 'Specifies the path and filename of the compiled model, relative to the <code>\\models</code> folder of the <a href="https://developer.valvesoftware.com/wiki/Game_Directory" target="_blank">Game Directory</a>.'
         },
@@ -49,14 +74,28 @@ var CATEGORIES = {
         $cdmaterials: {
             cmd: '$cdmaterials',
             category: CATEGORIES.textures,
-            args: [{ type: ARG_TYPES.qstring, label: 'Materials folder path', many: true }],
+            args: [{
+                type: ARG_TYPES.qstring,
+                label: 'Materials folder path',
+                many: true,
+                validations: {
+                    value: { presence: true }
+                }
+            }],
             link: 'https://developer.valvesoftware.com/wiki/$cdmaterials',
             help: 'Defines the folders in which the game will search for the model\'s materials relative to <code><game>\\materials\\</code>. Subfolders are not searched.'
         },
         $scale: {
             cmd: '$scale',
             category: CATEGORIES.utility,
-            args: [{ type: ARG_TYPES.float, label: 'Multiplier', 'default': 1 }],
+            args: [{
+                type: ARG_TYPES.float,
+                label: 'Multiplier',
+                'default': 1,
+                validations: {
+                    value: { presence: true, numericality: true  }
+                }
+            }],
             link: 'https://developer.valvesoftware.com/wiki/$scale',
             help: 'Multiplies the size of all subsequent SMDs.'
         },
@@ -84,15 +123,19 @@ var CATEGORIES = {
                 args = this.get('args');
 
             return [cmd].concat(args.map(function (arg) {
+                var value = arg.get('value');
+
                 switch (arg.type) {
-                    case ARG_TYPES.file:
-                    case ARG_TYPES.qstring: 
-                        return '"' + arg.get('value') + '"';
-                    case ARG_TYPES.float:
-                    case ARG_TYPES.int:
                     case ARG_TYPES.string:
                     case ARG_TYPES.enum:
-                        return arg.get('value');
+                        return value;
+                    case ARG_TYPES.file:
+                    case ARG_TYPES.qstring: 
+                        return '"' + value + '"';
+                    case ARG_TYPES.float:
+                        return Number(value).toFixed(8).replace(/\.?0+$/, '');
+                    case ARG_TYPES.int:
+                        return Number(value).toFixed(0);
                     default:
                         throw new Error('No parser for type "' + arg.type + '"');
                 }

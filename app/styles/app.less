@@ -365,14 +365,50 @@ ul.sections > li > div {
 @performance: #ffae00;
 @textures: #5eba38;
 @utility: #cd82e2;
+@invalid: red;
 
 .category(@color) {
+    input[type=text]:focus, textarea:focus {
+        box-shadow: 0 0 5px @color;
+        border: 1px solid @color;
+    }
+
+    &.is-invalid {
+        .argument.is-invalid {
+            input, textarea {
+                border: 1px solid @invalid;
+            }
+
+            input[type=text]:focus, textarea:focus {
+                box-shadow: 0 0 5px @invalid;
+            }
+        }
+
+        .category {
+            background-color: @invalid;
+        }
+
+        .comment, .form-container {
+            border-left: 10px solid @invalid;
+        }
+
+        .comment {
+            border-bottom: 1px solid @invalid;
+        }
+
+        .form-container {
+            min-height: 60px;
+            border-bottom: 3px solid @invalid;
+            position: relative;
+        }
+    }
+
     .category {
         background-color: @color;
     }
 
     .comment, .form-container {
-        border-left: 10px solid @color
+        border-left: 10px solid @color;
     }
 
     .comment {
@@ -416,6 +452,15 @@ ul.sections > li > div {
     &:hover {
         color: #db524b;
     }
+}
+
+.error-label {
+    text-transform: uppercase;
+    font-size: 10px;
+    color: @invalid;
+    position: absolute;
+    bottom: 21px;
+    right: 7px;
 }
 
 .category {

@@ -1,23 +1,25 @@
 import Ember from 'ember';
+import EmberValidations from 'ember-validations';
 
-var Argument = Ember.Object.extend(Ember.Copyable, {
-        type: null,
-        value: null,
-        values: null,
-        label: 'Argument X',
-        'default': null,
-        many: false,
+export var Argument = Ember.Object.extend(Ember.Copyable, EmberValidations.Mixin, {
+    type: null,
+    value: null,
+    values: null,
+    label: 'Argument X',
+    'default': null,
+    many: false,
 
-        copy: function () {
-            return argFactory({
-                type: this.get('type'),
-                values: this.get('values'),
-                label: this.get('label'),
-                'default': this.get('default'),
-                many: this.get('many')
-            });
-        }
-    });
+    copy: function () {
+        return argFactory({
+            type: this.get('type'),
+            values: this.get('values'),
+            label: this.get('label'),
+            'default': this.get('default'),
+            many: this.get('many'),
+            validations: this._validations
+        });
+    }
+});
 
 export const ARG_TYPES = {
     'int': 'int',
@@ -33,7 +35,13 @@ export function argFactory(obj) {
         throw new Error('Unrecognized argument type: "' + obj.type + '"');
     }
 
+    // EmberValidations will clobber the validations object that you pass into the
+    // `create` function, so in order to preserve it for potential object cloning later, we'll tack it onto
+    // the created object afterwords as an implied private property
+    let validations = obj.validations;
     let ret = Argument.create(obj);
+
+    ret._validations = validations;
 
     if (!obj.value) {
         if (obj['default'] !== null && obj['default'] !== void 0) {

@@ -2,8 +2,26 @@ import Ember from 'ember';
 
 export default Ember.Component.extend({
     classNames: ['argument'],
-    classNameBindings: ['argument.type'],
+    classNameBindings: ['argument.type', 'isInvalid'],
     value: '',
+
+    isInvalid: function () {
+        return !this.get('argument.isValid');
+    }.property('argument.isValid'),
+
+    onValueChange: function () {
+        this.set('argument.value', this.get('value').trim());
+        this.validateArgument();
+    }.observes('value'),
+
+    validateArgument: function () {
+        var instance = this,
+            argument = instance.get('argument');
+
+        argument.validate().finally(function () {
+            instance.sendAction('validation');
+        });
+    },
 
     change: function (e) {
         var $target = Ember.$(e.target);

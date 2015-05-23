@@ -24,7 +24,7 @@
         <i {{action "help"}} class="help fa fa-question-circle"></i>
 
         {{#each arg in command.args}}
-            {{input-argument argument=arg add="duplicateArg" remove="removeArg"}}
+            {{input-argument argument=arg add="duplicateArg" remove="removeArg" validation="validation"}}
         {{/each}}
 
         {{#unless command.required}}
@@ -34,6 +34,9 @@
 
         <i {{action "toggleComment"}} class="toggle-comment fa fa-comment"></i>
 
+        {{#if isInvalid}}
+            <span class="error-label">ERROR</span>
+        {{/if}}
         <span class="category">{{ category }}</span>
     </div>
 </div>
