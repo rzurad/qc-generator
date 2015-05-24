@@ -9,7 +9,7 @@ export default Ember.Component.extend({
     classNames: ['script-builder', 'sections'],
     showNewCommandEditor: false,
     isDownloadAvailable: typeof Blob !== 'undefined',
-    filename: 'qc-generator.qc',
+    filename: 'generated.qc',
 
     commands: Object.keys(Command.COMMANDS).map(function (key) {
         return Ember.$.extend(true, {}, Command.COMMANDS[key]);
