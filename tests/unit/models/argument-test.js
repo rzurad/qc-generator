@@ -1,12 +1,11 @@
-import { moduleForModel, test } from 'ember-qunit';
+import { module, test } from 'qunit';
+import Argument from '../../../models/argument';
 
-moduleForModel('argument', 'Unit | Model | argument', {
-  // Specify the other units that are required for this test.
-    needs: []
-});
+module('Unit | Model | Argument');
 
-test('it exists', function(assert) {
-  var model = this.subject();
-  // var store = this.store();
-  assert.ok(!!model);
+test('it exists', function (assert) {
+    assert.ok(typeof Argument !== 'undefined');
+
+    assert.ok(typeof Argument.TYPES === 'object');
+    assert.ok(Object.isFrozen(Argument.TYPES));
 });

@@ -68,12 +68,12 @@ export default Argument = Ember.Object.extend(Ember.Copyable, EmberValidations.M
 });
 
 Argument.reopenClass({
-    TYPES: {
+    TYPES: Object.freeze({
         'int': 'int',
         'float': 'float',
         'file': 'file',
         'string': 'string',
         'qstring': 'qstring',
         'enum': 'enum'
-    }
+    })
 });

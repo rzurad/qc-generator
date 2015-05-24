@@ -1,12 +1,8 @@
 import { moduleForComponent, test } from 'ember-qunit';
-import buildContainer from '../../helpers/build-container';
 
 moduleForComponent('script-builder', {
     // Specify the other units that are required for this test
-    needs: ['component:command-builder', 'component:input-argument'],
-    setup: function () {
-
-    }
+    needs: ['component:command-builder', 'component:input-argument']
 });
 
 test('it renders', function (assert) {
