@@ -1,4 +1,4 @@
-export default function deepFreeze(obj) {
+export function deepFreeze(obj) {
     var prop, propKey;
 
     Object.freeze(obj); // First freeze the object.
@@ -18,3 +18,5 @@ export default function deepFreeze(obj) {
 
     return obj;
 }
+
+export default deepFreeze;

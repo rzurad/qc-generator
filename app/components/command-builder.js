@@ -12,7 +12,9 @@ export default Ember.Component.extend({
     isValid: true,
 
     category: function () {
-        return this.get('command.category').toLowerCase();
+        var cat = this.get('command.category');
+
+        return cat && cat.toLowerCase();
     }.property('command'),
 
     onInit: function () {

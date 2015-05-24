@@ -9,7 +9,7 @@
 //
 // This hack will go away when EV is out of alpha and (hopefully) removes all their deprecation
 // warnings
-import { Argument } from '../models/args';
+import Argument from '../models/argument';
 
 export function initialize(container/*, application */) {
     Argument.reopen({ container: container });
