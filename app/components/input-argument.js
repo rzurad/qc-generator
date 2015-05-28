@@ -3,6 +3,7 @@ import Ember from 'ember';
 export default Ember.Component.extend({
     classNames: ['argument'],
     classNameBindings: ['argument.type', 'isInvalid'],
+    argument: null,
     value: '',
 
     // Has the user interacted with this input field yet?
@@ -12,22 +13,29 @@ export default Ember.Component.extend({
         return this.get('isTouched') && !this.get('argument.isValid');
     }.property('argument.isValid', 'isTouched'),
 
+    onInit: function () {
+        this.set('value', String(this.get('argument.value')));
+    }.on('init'),
+
     onValueChange: function () {
-        this.set('argument.value', this.get('value').trim());
-        this.validateArgument();
+        let value = this.get('value');
+
+        if (value) {
+            this.set('argument.value', value.trim());
+            this.validateArgument();
+        }
     }.observes('value'),
 
     validateArgument: function () {
-        var instance = this,
-            argument = instance.get('argument');
+        let instance = this;
 
-        argument.validate().finally(function () {
+        instance.get('argument').validate().finally(function () {
             instance.sendAction('validation');
         });
     },
 
     change: function (e) {
-        var $target = Ember.$(e.target);
+        let $target = Ember.$(e.target);
 
         if ($target.is('input[type="file"]') && e.target.files.length) {
             this.set('argument.value', '<subdirectory>\\' + e.target.files[0].name);

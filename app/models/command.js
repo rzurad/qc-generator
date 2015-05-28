@@ -54,7 +54,7 @@ let COMMANDS = deepFreeze({
             }
         }],
         link: 'https://developer.valvesoftware.com/wiki/$body',
-        help: 'Add a reference mesh to a model.'
+        help: 'Add a reference mesh to a model'
     },
     $model: {
         cmd: '$model',
@@ -62,7 +62,7 @@ let COMMANDS = deepFreeze({
         args: [{
             type: Argument.TYPES.qstring,
             label: 'name',
-            'default': 'body',
+            'default': '',
             validations: {
                 value: { presence: true }
             }
@@ -75,7 +75,7 @@ let COMMANDS = deepFreeze({
         }],
         link: 'https://developer.valvesoftware.com/wiki/$model',
         incomplete: true,
-        help: 'Specifies a reference SMD file to be used as part of a complex model.'
+        help: 'Specifies a reference SMD file to be used as part of a complex model'
     },
     $modelname: {
         cmd: '$modelname',
@@ -89,14 +89,14 @@ let COMMANDS = deepFreeze({
             }
         }],
         link: 'https://developer.valvesoftware.com/wiki/$modelname',
-        help: 'Specifies the path and filename of the compiled model, relative to the <code>\\models</code> folder of the <a href="https://developer.valvesoftware.com/wiki/Game_Directory" target="_blank">Game Directory</a>.'
+        help: 'Specifies the path and filename of the compiled model, relative to the <code>\\models</code> folder of the <strong>Game Directory</strong>'
     },
     $staticprop: {
         cmd: '$staticprop',
         category: CATEGORIES.performance,
         args: [],
         link: 'https://developer.valvesoftware.com/wiki/$staticprop',
-        help: 'Specifies that the model being compiled does not have any moving parts.'
+        help: 'Specifies that the model being compiled does not have any moving parts'
     },
     $cdmaterials: {
         cmd: '$cdmaterials',
@@ -110,7 +110,7 @@ let COMMANDS = deepFreeze({
             }
         }],
         link: 'https://developer.valvesoftware.com/wiki/$cdmaterials',
-        help: 'Defines the folders in which the game will search for the model\'s materials relative to <code><game>\\materials\\</code>. Subfolders are not searched.'
+        help: 'Defines the folders in which the game will search for the model\'s materials relative to <code>&lt;game&gt;\\materials\\</code><br><br>Subfolders are not searched'
     },
     $scale: {
         cmd: '$scale',
@@ -124,7 +124,7 @@ let COMMANDS = deepFreeze({
             }
         }],
         link: 'https://developer.valvesoftware.com/wiki/$scale',
-        help: 'Multiplies the size of all subsequent SMDs.'
+        help: 'Multiplies the size of all subsequent SMDs'
     },
     $upaxis: {
         cmd: '$upaxis',
@@ -132,7 +132,7 @@ let COMMANDS = deepFreeze({
         args: [{
             type: Argument.TYPES.enum,
             label: 'Axis',
-            default: 'Z',
+            'default': 'Z',
             allowedValues: [
                 { label: 'X Axis', value: 'X' },
                 { label: 'Y Axis', value: 'Y' },
@@ -140,7 +140,7 @@ let COMMANDS = deepFreeze({
             ],
         }],
         link: 'https://developer.valvesoftware.com/wiki/$upaxis',
-        help: 'Informs StudioMDL which axis in the SMD file should be considered \'up\'.'
+        help: 'Informs StudioMDL which axis in the SMD file should be considered \'up\''
     }
 });
 

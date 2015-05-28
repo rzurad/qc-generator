@@ -12,24 +12,24 @@ export default Ember.Component.extend({
     isValid: true,
 
     category: function () {
-        var cat = this.get('command.category');
+        let cat = this.get('command.category');
 
         return cat && cat.toLowerCase();
     }.property('command'),
 
     onInit: function () {
-        var comment = this.get('command.comment');
+        let comment = this.get('command.comment');
 
         // if there is a comment, enable contenteditable and stuff
         // the comment text into the editable div
-        if (!!comment) {
+        if (comment) {
             this.set('isContentEditable', !!comment);
             this.set('isCommentVisible', true);
         }
     }.on('init'),
 
     onIsCommentVisibleChange: function () {
-        var comment = this.get('command.comment');
+        let comment = this.get('command.comment');
 
         if (this.get('isCommentVisible') && comment) {
             Ember.run.scheduleOnce('afterRender', this, function () {
@@ -39,7 +39,7 @@ export default Ember.Component.extend({
     }.observes('isCommentVisible'),
 
     focusOut: function (e) {
-        var $target = Ember.$(e.target);
+        let $target = Ember.$(e.target);
 
         if ($target.is('.comment') && !htmlToText($target.html())) {
             this.set('isContentEditable', false);
@@ -48,7 +48,7 @@ export default Ember.Component.extend({
     },
 
     change: function (e) {
-        var $target = Ember.$(e.target);
+        let $target = Ember.$(e.target);
 
         if ($target.is('.command')) {
             this.sendAction('replace', this.get('command'), $target.val());
@@ -56,11 +56,10 @@ export default Ember.Component.extend({
     },
 
     keyUp: function (e) {
-        var $target = Ember.$(e.target),
-            text;
+        let $target = Ember.$(e.target);
 
         if ($target.is('.comment')) {
-            text = htmlToText($target.html());
+            let text = htmlToText($target.html());
 
             // just straight newlines here, because we're still in-browser
             text = text.split('\n').map(function (line) { return '// ' + line; }).join('\n');
