@@ -32,6 +32,22 @@ export default Ember.Component.extend({
         }
     },
 
+    validate: function () {
+        let instance = this;
+
+        return new Ember.RSVP.Promise(function (resolve, reject) {
+            instance.incrementProperty('validationTrigger');
+
+            Ember.run.scheduleOnce('afterRender', instance, function () {
+                if (Ember.$(this.get('element')).find('.is-invalid').length) {
+                    reject();
+                } else {
+                    resolve();
+                }
+            });
+        });
+    },
+
     toArray: function () {
         let arr = [];
 
@@ -72,25 +88,25 @@ export default Ember.Component.extend({
         },
 
         download: function () {
-            this.incrementProperty('validationTrigger');
+            let instance = this;
 
-            Ember.run.scheduleOnce('afterRender', this, function () {
-                if (Ember.$(this.get('element')).find('.is-invalid').length) {
-                    console.log('No go on download');
-                } else {
-                    let blob = new Blob([this.toString()], { type: 'text/plain;charset=utf-8' });
-                    saveAs(blob, this.get('filename'));
-                }
+            this.validate().then(function () {
+                let script = instance.toString(),
+                    filename = instance.get('filename');
+
+                saveAs(new Blob([script], { type: 'text/plain;charset=utf-8' }), filename);
+            }, function () {
+                console.log('no go on download');
             });
         },
 
         copyToClipboard: function () {
-            this.validateScript();
-
-            if (this.get('isValid')) {
+            this.validate().then(function () {
                 //var event = new ClipboardEvent('copy', { dataType: 'text/plain', data: 'hello from the clipboard!' });
                 //document.dispatchEvent(event);
-            }
+            }, function () {
+                console.log('no go on copy');
+            });
         }
     }
 });
