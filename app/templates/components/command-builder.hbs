@@ -24,7 +24,7 @@
         <i {{action "help"}} class="help fa fa-question-circle" data-toggle="tooltip" title="{{ command.help }}"></i>
 
         {{#each arg in command.args}}
-            {{input-argument argument=arg add="duplicateArg" remove="removeArg" validation="validation"}}
+            {{input-argument argument=arg add="duplicateArg" remove="removeArg" validate="validateArgument"}}
         {{/each}}
 
         {{#unless command.required}}

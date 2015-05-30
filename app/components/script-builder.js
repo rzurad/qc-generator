@@ -22,12 +22,6 @@ export default Ember.Component.extend({
         )
     ],
 
-    isValid: function () {
-        return this.get('childViews').every(function (cmdComponent) {
-            return cmdComponent.get('isValid');
-        });
-    }.property('childViews.@each.isValid'),
-
     disabledClass: function () {
         return this.get('isValid') ? '' : 'disabled';
     }.property('isValid'),
@@ -64,13 +58,7 @@ export default Ember.Component.extend({
     },
 
     validateScript: function () {
-        this.get('childViews').forEach(function (cmdComponent) {
-            cmdComponent.get('command.args').forEach(function (arg) {
-                arg.validate();
-            });
-
-            cmdComponent.send('validation');
-        });
+        console.log('script wants to validate!');
     },
 
     actions: {

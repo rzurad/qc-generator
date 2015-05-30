@@ -388,15 +388,20 @@ ul.sections > li > div {
         border: 1px solid @color;
     }
 
-    &.is-invalid {
-        .argument.is-invalid {
-            input, textarea {
-                border: 1px solid @invalid;
-            }
+    .argument.is-invalid {
+        input, textarea {
+            border: 1px solid @invalid;
+        }
 
-            input[type=text]:focus, textarea:focus {
-                box-shadow: 0 0 5px @invalid;
-            }
+        input[type=text]:focus, textarea:focus {
+            box-shadow: 0 0 5px @invalid;
+        }
+    }
+
+    &.is-invalid {
+
+        .error-label {
+            display: inline-block;
         }
 
         .category {
@@ -470,6 +475,7 @@ ul.sections > li > div {
 }
 
 .error-label {
+    display: none;
     text-transform: uppercase;
     font-size: 10px;
     color: @invalid;

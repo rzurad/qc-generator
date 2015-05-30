@@ -4,12 +4,12 @@ import { htmlToText } from '../helpers/html-to-text';
 export default Ember.Component.extend({
     tagName: 'li',
     classNames: ['command-builder'],
-    classNameBindings: ['category', 'isValid::is-invalid'],
+    classNameBindings: ['category', 'isInvalid'],
     command: null,
     commands: null,
     isContentEditable: false,
     isCommentVisible: false,
-    isValid: true,
+    isInvalid: false,
 
     category: function () {
         let cat = this.get('command.category');
@@ -90,23 +90,33 @@ export default Ember.Component.extend({
         },
 
         duplicateArg: function (arg) {
-            var clone = Ember.copy(arg);
+            let clone = Ember.copy(arg);
 
             clone.set('value', clone.get('default'));
             this.get('command.args').pushObject(clone);
         },
 
         removeArg: function (arg) {
-            var args = this.get('command.args'),
+            let args = this.get('command.args'),
                 idx = args.indexOf(arg);
 
             args.removeAt(idx);
         },
 
-        validation: function () {
-            this.set('isValid', this.get('command.args').every(function (arg) {
-                return arg.get('isValid');
-            }));
+        validateArgument: function (arg) {
+            let instance = this;
+
+            arg.validate().finally(function () {
+                // because the visual display of validation errors is dependent on user interaction
+                // as well as the argument.isValid property, we have to iterate through the dom and
+                // see which of our input components has an is-invalid class. If any of them are,
+                // then we can safely apply the is-invalid class to this command-builder component
+                // and show the validation error
+                Ember.run.scheduleOnce('afterRender', instance, function () {
+                    let isInvalid = !!Ember.$(instance.get('element')).find('.is-invalid').length;
+                    instance.set('isInvalid', isInvalid);
+                });
+            });
         }
     }
 });

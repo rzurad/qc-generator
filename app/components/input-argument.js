@@ -13,6 +13,11 @@ export default Ember.Component.extend({
         return this.get('isTouched') && !this.get('argument.isValid');
     }.property('argument.isValid', 'isTouched'),
 
+    requestValidation: function () {
+        this.set('isTouched', true);
+        this.sendAction('validate', this.get('argument'));
+    },
+
     onInit: function () {
         this.set('value', String(this.get('argument.value')));
     }.on('init'),
@@ -20,27 +25,11 @@ export default Ember.Component.extend({
     onValueChange: function () {
         let value = this.get('value');
 
-        if (value) {
+        if (this.get('isTouched')) {
             this.set('argument.value', value.trim());
-            this.validateArgument();
+            this.requestValidation();
         }
     }.observes('value'),
-
-    validateArgument: function () {
-        let instance = this;
-
-        instance.get('argument').validate().finally(function () {
-            instance.sendAction('validation');
-        });
-    },
-
-    change: function (e) {
-        let $target = Ember.$(e.target);
-
-        if ($target.is('input[type="file"]') && e.target.files.length) {
-            this.set('argument.value', '<subdirectory>\\' + e.target.files[0].name);
-        }
-    },
 
     actions: {
         add: function () {
@@ -52,11 +41,21 @@ export default Ember.Component.extend({
         },
 
         blur: function () {
-            this.validateArgument();
-
-            if (!this.get('isTouched')) {
-                this.set('isTouched', true);
-            }
+            this.requestValidation();
         }
+    },
+
+    change: function (e) {
+        let $target = Ember.$(e.target);
+
+        if ($target.is('input[type="file"]') && e.target.files.length) {
+            this.set('argument.value', '<subdirectory>\\' + e.target.files[0].name);
+        } else {
+            this.set('argument.value', Ember.$(e.target).val());
+        }
+    },
+
+    keyDown: function () {
+        this.set('isTouched', true);
     }
 });
