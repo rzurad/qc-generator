@@ -13,6 +13,10 @@ export default Ember.Component.extend({
         return this.get('isTouched') && !this.get('argument.isValid');
     }.property('argument.isValid', 'isTouched'),
 
+    onShowInitValidationErrorsChange: function () {
+        this.set('isTouched', true);
+    }.observes('showInitValidationErrors'),
+
     requestValidation: function () {
         this.set('isTouched', true);
         this.sendAction('validate', this.get('argument'));

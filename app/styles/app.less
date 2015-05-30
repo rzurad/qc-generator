@@ -383,17 +383,17 @@ ul.sections > li > div {
 @invalid: red;
 
 .category(@color) {
-    input[type=text]:focus, textarea:focus {
+    select:focus, input[type=text]:focus, textarea:focus {
         box-shadow: 0 0 5px @color;
         border: 1px solid @color;
     }
 
     .argument.is-invalid {
-        input, textarea {
+        select, input, textarea {
             border: 1px solid @invalid;
         }
 
-        input[type=text]:focus, textarea:focus {
+        select, input[type=text]:focus, textarea:focus {
             box-shadow: 0 0 5px @invalid;
         }
     }

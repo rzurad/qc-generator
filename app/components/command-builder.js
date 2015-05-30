@@ -9,13 +9,33 @@ export default Ember.Component.extend({
     commands: null,
     isContentEditable: false,
     isCommentVisible: false,
+
+    // Used for telling child input-argument components that they should not
+    // suppress the fact that an argument is inValid upon creation
+    showInitValidationErrors: false,
     isInvalid: false,
+
+    onValidationTrigger: function () {
+        this.set('showInitValidationErrors', true);
+        this.checkInvalidClasses();
+    }.observes('validationTrigger'),
+
+    checkInvalidClasses: function () {
+        Ember.run.scheduleOnce('afterRender', this, function () {
+            this.set('isInvalid', !!Ember.$(this.get('element')).find('.is-invalid').length);
+        });
+    },
 
     category: function () {
         let cat = this.get('command.category');
 
         return cat && cat.toLowerCase();
     }.property('command'),
+
+    onCommandChange: function () {
+        this.set('showInitValidationErrors', false);
+        this.set('isInvalid', false);
+    }.observes('command', 'command.cmd'),
 
     onInit: function () {
         let comment = this.get('command.comment');
@@ -107,15 +127,7 @@ export default Ember.Component.extend({
             let instance = this;
 
             arg.validate().finally(function () {
-                // because the visual display of validation errors is dependent on user interaction
-                // as well as the argument.isValid property, we have to iterate through the dom and
-                // see which of our input components has an is-invalid class. If any of them are,
-                // then we can safely apply the is-invalid class to this command-builder component
-                // and show the validation error
-                Ember.run.scheduleOnce('afterRender', instance, function () {
-                    let isInvalid = !!Ember.$(instance.get('element')).find('.is-invalid').length;
-                    instance.set('isInvalid', isInvalid);
-                });
+                instance.checkInvalidClasses();
             });
         }
     }

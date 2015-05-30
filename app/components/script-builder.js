@@ -10,6 +10,7 @@ export default Ember.Component.extend({
     showNewCommandEditor: false,
     isDownloadAvailable: typeof Blob !== 'undefined',
     filename: 'generated.qc',
+    validationTrigger: 0,
 
     commands: Object.keys(Command.COMMANDS).map(function (key) {
         return Ember.$.extend(true, {}, Command.COMMANDS[key]);
@@ -22,10 +23,6 @@ export default Ember.Component.extend({
         )
     ],
 
-    disabledClass: function () {
-        return this.get('isValid') ? '' : 'disabled';
-    }.property('isValid'),
-
     change: function (e) {
         let $target = Ember.$(e.target);
 
@@ -35,7 +32,7 @@ export default Ember.Component.extend({
         }
     },
 
-    toArray: function() {
+    toArray: function () {
         let arr = [];
 
         this.get('script').forEach(function (cmd) {
@@ -57,10 +54,6 @@ export default Ember.Component.extend({
         return this.toArray().join('\r\n');
     },
 
-    validateScript: function () {
-        console.log('script wants to validate!');
-    },
-
     actions: {
         addCommand: function () {
             this.set('showNewCommandEditor', true);
@@ -79,11 +72,16 @@ export default Ember.Component.extend({
         },
 
         download: function () {
-            this.validateScript();
+            this.incrementProperty('validationTrigger');
 
-            if (this.get('isValid')) {
-                saveAs(new Blob([this.toString()], { type: 'text/plain;charset=utf-8' }), this.get('filename'));
-            }
+            Ember.run.scheduleOnce('afterRender', this, function () {
+                if (Ember.$(this.get('element')).find('.is-invalid').length) {
+                    console.log('No go on download');
+                } else {
+                    let blob = new Blob([this.toString()], { type: 'text/plain;charset=utf-8' });
+                    saveAs(blob, this.get('filename'));
+                }
+            });
         },
 
         copyToClipboard: function () {

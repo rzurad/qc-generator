@@ -7,6 +7,7 @@
 {{#each command in script}}
     {{command-builder command=command
                       commands=commands
+                      validationTrigger=validationTrigger
                       delete="deleteCommand"
                       replace="replaceCommand"
     }}
