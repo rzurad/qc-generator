@@ -7,7 +7,9 @@ export default Ember.Component.extend({
     value: '',
 
     errors: function () {
-        return Ember.String.htmlSafe(this.get('argument.errors.value').join(', '));
+        let value = this.get('argument.errors.value');
+
+        return value ? value.join(', ') : '';
     }.property('argument.errors.value', 'argument.errors.value.@each'),
 
     // Has the user interacted with this input field yet?
