@@ -6,8 +6,18 @@ export default Ember.Component.extend({
     argument: null,
     value: '',
 
+    errors: function () {
+        return Ember.String.htmlSafe(this.get('argument.errors.value').join(', '));
+    }.property('argument.errors.value', 'argument.errors.value.@each'),
+
     // Has the user interacted with this input field yet?
     isTouched: false,
+    isInputFocused: false,
+    showErrorTooltip: false,
+
+    onErrorTooltipConditionChange: function () {
+        Ember.run.scheduleOnce('afterRender', this, this.checkErrorTooltip);
+    }.observes('isInvalid', 'isInputFocused'),
 
     isInvalid: function () {
         return this.get('isTouched') && !this.get('argument.isValid');
@@ -35,6 +45,18 @@ export default Ember.Component.extend({
         }
     }.observes('value'),
 
+    checkErrorTooltip: function () {
+        let current = this.get('showErrorTooltip'),
+            computed = this.get('isInvalid') && this.get('isInputFocused');
+            
+        if (current !== computed) {
+            let str = computed ? 'show' : 'hide';
+
+            this.set('showErrorTooltip', computed);
+            Ember.$(this.get('element')).find('.error-tooltip-anchor').tooltip(str);
+        }
+    },
+
     actions: {
         add: function () {
             this.sendAction('add', this.get('argument'));
@@ -46,6 +68,11 @@ export default Ember.Component.extend({
 
         blur: function () {
             this.requestValidation();
+            this.set('isInputFocused', false);
+        },
+
+        focus: function () {
+            this.set('isInputFocused', true);
         }
     },
 

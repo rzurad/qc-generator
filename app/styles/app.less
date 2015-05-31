@@ -174,6 +174,15 @@ ul.sections > li > div {
         margin-left: 157px;
         margin-bottom: 10px;
 
+        .error-tooltip-anchor {
+            position: absolute;
+            left: 50%;
+            margin-left: -5px;
+            top: 0px;
+            z-index: -10;
+            opacity: 0;
+        }
+
         .file-input {
             position: relative;
             display: inline-block;
@@ -388,6 +397,16 @@ ul.sections > li > div {
         border: 1px solid @color;
     }
 
+    .error-tooltip-anchor + .tooltip {
+        .tooltip-inner {
+            background-color: @invalid;
+        }
+
+        .tooltip-arrow {
+            border-top-color: @invalid;
+        }
+    }
+
     .argument.is-invalid {
         select, input, textarea {
             border: 1px solid @invalid;
@@ -399,7 +418,6 @@ ul.sections > li > div {
     }
 
     &.is-invalid {
-
         .error-label {
             display: inline-block;
         }

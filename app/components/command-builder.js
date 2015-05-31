@@ -121,6 +121,7 @@ export default Ember.Component.extend({
                 idx = args.indexOf(arg);
 
             args.removeAt(idx);
+            this.checkInvalidClasses();
         },
 
         validateArgument: function (arg) {
