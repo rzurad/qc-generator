@@ -148,11 +148,21 @@ ul.sections > li > div {
         padding: 10px;
     }
 
+    i.fa {
+        cursor: pointer;
+        color: #777;
+        transition-property: color;
+        transition-duration: 0.2s;
+
+        &:hover {
+            color: #333;
+        }
+    }
+
     .help {
         position: absolute;
         top: 20px;
         left: 150px;
-        cursor: pointer;
     }
 
     .comment {
@@ -227,7 +237,6 @@ ul.sections > li > div {
                 -ms-user-select: none;
                 user-select: none;
                 -khtml-user-select: none;
-                cursor: pointer;
             }
         }
     }
@@ -474,7 +483,6 @@ ul.sections > li > div {
 }
 
 .toggle-comment {
-    cursor: pointer;
     right: 10px;
 }
 
@@ -483,13 +491,12 @@ ul.sections > li > div {
     cursor: move;
 }
 
-.delete-command {
-    right: 50px;
-    cursor: pointer;
-
+.command-builder i.fa.delete-command {
     &:hover {
-        color: #db524b;
+        color: @invalid;
     }
+
+    right: 50px;
 }
 
 .error-label {
