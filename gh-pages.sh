@@ -11,6 +11,7 @@ if [ $? == 0 ]; then
     git branch -D gh-pages
 fi
 
+set -e
 ember build --env=production
 git checkout --orphan gh-pages
 git reset --hard

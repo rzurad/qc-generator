@@ -29,13 +29,11 @@ p {
 }
 
 #filename .annotation {
-    text-align: right;
     margin-bottom: 10px;
-    padding-right: 10px;
 
     .input-filename {
         display: inline-block;
-        width: 300px;
+        width: 355px;
         margin-left: 10px;
     }
 }
@@ -47,6 +45,10 @@ p {
 #add-command {
     margin-top: 35px;
     margin-bottom: 35px;
+
+    .annotation {
+        text-align: center;
+    }
 }
 
 .annotation ul, .annotation ol {
@@ -243,7 +245,7 @@ ul.sections > li > div {
 }
 
 /*---------------------- Low resolutions (> 320px) ---------------------*/
-@media only screen and (min-width: 320px) {
+@media only screen and (min-width: 100px) {
     .application {
         min-width: 480px;
     }
@@ -285,6 +287,10 @@ ul.sections > li > div {
 
     ul.sections.script-builder {
         margin-top: 15px;
+    }
+
+    #filename .annotation {
+        margin-left: 10px;
     }
 }
 
@@ -389,6 +395,10 @@ ul.sections > li > div {
 
     ul.sections > li > div.annotation:hover .pilcrow {
         opacity: 1;
+    }
+
+    #filename .annotation {
+        margin-left: 0px;
     }
 }
 
