@@ -83,7 +83,7 @@ export default Ember.Component.extend({
         this.set('isTouched', true);
 
         if ($target.is('input[type="file"]') && e.target.files.length) {
-            this.set('value', '<subdirectory>\\' + e.target.files[0].name);
+            this.set('value', e.target.files[0].name);
         } else {
             this.set('value', Ember.$(e.target).val());
         }

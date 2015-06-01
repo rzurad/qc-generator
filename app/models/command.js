@@ -48,7 +48,7 @@ let COMMANDS = deepFreeze({
             }
         }, {
             type: Argument.TYPES.file,
-            label: 'SMD file',
+            label: '<modelname>.smd',
             validations: {
                 value: { presence: true }
             }
@@ -68,7 +68,7 @@ let COMMANDS = deepFreeze({
             }
         }, {
             type: Argument.TYPES.file,
-            label: 'SMD file',
+            label: '<modelname>.smd',
             validations: {
                 value: { presence: true }
             }
@@ -83,8 +83,8 @@ let COMMANDS = deepFreeze({
         category: CATEGORIES.fundamentals,
         args: [{
             type: Argument.TYPES.qstring,
-            label: 'MDL file path',
-            'default': '<folder>\\<modelname>.mdl',
+            label: '<folder>\\<modelname>.mdl',
+            'default': '',
             validations: {
                 value: { presence: true }
             }
@@ -118,7 +118,7 @@ let COMMANDS = deepFreeze({
         category: CATEGORIES.utility,
         args: [{
             type: Argument.TYPES.float,
-            label: 'Multiplier',
+            label: 'Value',
             'default': 1,
             validations: {
                 value: { presence: true, numericality: true  }
