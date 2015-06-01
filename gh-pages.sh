@@ -1,7 +1,14 @@
 #!/bin/bash
 
+git update-index -q --ignore-submodules --refresh
+git diff-index --quiet --ignore-submodules HEAD -- || {
+    git status -uno
+    echo "The git tree is dirty. Exiting..."
+    exit 1;
+}
+
 if [ -z "$1" ]; then
-    echo "No commit message given"
+    echo "No commit message given. Exiting..."
     exit 1
 fi
 
