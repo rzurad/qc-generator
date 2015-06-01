@@ -12,7 +12,7 @@ if [ -z "$1" ]; then
     exit 1
 fi
 
-git show-ref --verify --quiet refs/heads/gh-pages || {
+git show-ref --verify --quiet refs/heads/gh-pages && {
     git branch -D gh-pages
 }
 
