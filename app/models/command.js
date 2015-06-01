@@ -82,8 +82,9 @@ let COMMANDS = deepFreeze({
         required: true,
         category: CATEGORIES.fundamentals,
         args: [{
-            type: Argument.TYPES.file,
+            type: Argument.TYPES.qstring,
             label: 'MDL file path',
+            'default': '<folder>\\<modelname>.mdl',
             validations: {
                 value: { presence: true }
             }
