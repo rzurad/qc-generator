@@ -6,12 +6,16 @@ let Command;
 export default Command = Ember.Object.extend({
     output: function () {
         var cmd = this.get('cmd'),
-            args = this.get('args');
+            args = this.get('args'),
+            arr;
 
-        return [cmd].concat(args.map(function (arg) {
+        arr = [cmd].concat(args.map(function (arg) {
             var value = arg.get('value');
 
             switch (arg.type) {
+                case Argument.TYPES.bool:
+                    console.log('outputting a bool arg:', value, value === 'yes' ? arg.get('label') : '');
+                    return value === 'yes' ? arg.get('label') : '';
                 case Argument.TYPES.string:
                 case Argument.TYPES.enum:
                     return value;
@@ -25,11 +29,17 @@ export default Command = Ember.Object.extend({
                 default:
                     throw new Error('No parser for type "' + arg.type + '"');
             }
-        })).join(' ');
+        }));
+
+        arr.removeObjects('');
+
+        return arr.join(' ');
     }.property('cmd', 'args.@each.value')
 });
 
 let CATEGORIES = deepFreeze({
+    animation: 'Animation',
+    collision: 'Collision',
     fundamentals: 'Fundamentals',
     textures: 'Textures',
     performance: 'Performance',
@@ -37,6 +47,47 @@ let CATEGORIES = deepFreeze({
 });
 
 let COMMANDS = deepFreeze({
+    $sequence: {
+        cmd: '$sequence',
+        category: CATEGORIES.animation,
+        args: [{
+            type: Argument.TYPES.string,
+            label: 'name',
+            validations: {
+                value: { presence: true }
+            },
+            'default': 'idle'
+        }, {
+            type: Argument.TYPES.file,
+            label: 'Animation SMD',
+            validations: {
+                value: { presence: true }
+            }
+        }, {
+            type: Argument.TYPES.bool,
+            label: 'loop',
+            'default': 'yes',
+            allowedValues: [
+                { label: 'Loop animation', value: 'yes' },
+                { label: 'Do not loop animation', value: 'no' }
+            ]
+        }],
+        link: 'https://developer.valvesoftware.com/wiki/$sequence',
+        help: 'Defines a skeletal animation for an SMD model<br><br>Required for all props'
+    },
+    $collisionmodel: {
+        cmd: '$collisionmodel',
+        category: CATEGORIES.collision,
+        args: [{
+            type: Argument.TYPES.file,
+            label: 'Collision SMD',
+            validations: {
+                value: { presence: true }
+            }
+        }],
+        link: 'https://developer.valvesoftware.com/wiki/$collisionmodel',
+        help: 'Embed a static collision mesh in a model for use in VPhysics calculations'
+    },
     $body: {
         cmd: '$body',
         category: CATEGORIES.fundamentals,
@@ -113,6 +164,19 @@ let COMMANDS = deepFreeze({
         link: 'https://developer.valvesoftware.com/wiki/$cdmaterials',
         help: 'Defines the folders in which the game will search for the model\'s materials relative to <code>&lt;game&gt;\\materials\\</code><br><br>Subfolders are not searched'
     },
+    $surfaceprop: {
+        cmd: '$surfaceprop',
+        category: CATEGORIES.textures,
+        args: [{
+            type: Argument.TYPES.qstring,
+            label: 'name',
+            validations: {
+                value: { presence: true }
+            }
+        }],
+        link: 'https://developer.valvesoftware.com/wiki/Material_surface_properties',
+        help: 'Links the surface of either a <code>material</code> or <code>model</code> to a set of physical properties.<br><br>Must be a value defined in the <code>surfaceproperties_manifest</code> text file'
+    },
     $scale: {
         cmd: '$scale',
         category: CATEGORIES.utility,
@@ -121,7 +185,7 @@ let COMMANDS = deepFreeze({
             label: 'Value',
             'default': 1,
             validations: {
-                value: { presence: true, numericality: true  }
+                value: { presence: true, numericality: true }
             }
         }],
         link: 'https://developer.valvesoftware.com/wiki/$scale',

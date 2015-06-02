@@ -30,6 +30,10 @@ export default Argument = Ember.Object.extend(Ember.Copyable, EmberValidations.M
             } else {
                 // assign a default value
                 switch (type) {
+                    case Argument.TYPES.bool:
+                        this.set('default', 'no');
+                        this.set('value', 'no');
+                        break;
                     case Argument.TYPES.int:
                     case Argument.TYPES.float:
                         this.set('default', 0);
@@ -72,6 +76,7 @@ Argument.reopenClass({
         'int': 'int',
         'float': 'float',
         'file': 'file',
+        'bool': 'bool',
         'string': 'string',
         'qstring': 'qstring',
         'enum': 'enum'

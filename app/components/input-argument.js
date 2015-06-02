@@ -85,6 +85,7 @@ export default Ember.Component.extend({
         if ($target.is('input[type="file"]') && e.target.files.length) {
             this.set('value', e.target.files[0].name);
         } else {
+            console.log('set value', Ember.$(e.target).val());
             this.set('value', Ember.$(e.target).val());
         }
     },

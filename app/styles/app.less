@@ -36,6 +36,7 @@ body {
 
 a {
     color: #000;
+    font-weight: bold;
 }
 
 p {
@@ -203,7 +204,7 @@ ul.sections > li > div {
         border-left: 1px solid #cacaca;
         margin-left: 157px;
         margin-bottom: 10px;
-        min-width: 210px;
+        min-width: 250px;
 
         .error-tooltip-anchor {
             position: absolute;
@@ -222,7 +223,7 @@ ul.sections > li > div {
 
         &.file input {
             display: inline-block;
-            width: 150px;
+            width: 197px;
         }
 
         &.file input[type="file"] {
@@ -266,7 +267,7 @@ ul.sections > li > div {
 /*---------------------- Low resolutions (> 320px) ---------------------*/
 @media only screen and (min-width: 100px) {
     .application {
-        min-width: 480px;
+        min-width: 535px;
     }
 
     #title {
@@ -434,7 +435,9 @@ ul.sections > li > div {
 @fundamentals: #7e7e8c;
 @performance: #ffae00;
 @textures: #5eba38;
+@collision: #4100ff;
 @utility: #cd82e2;
+@animation: #0094ff;
 @invalid: red;
 
 .category(@color) {
@@ -510,6 +513,8 @@ ul.sections > li > div {
 .fundamentals { .category(@fundamentals); }
 .performance { .category(@performance); }
 .textures { .category(@textures); }
+.collision { .category(@collision); }
+.animation { .category(@animation); }
 .utility { .category(@utility); }
 
 .toggle-comment,
