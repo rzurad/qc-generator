@@ -15,8 +15,6 @@
 
     HTML decoding functionality provided by: http://code.google.com/p/google-trekker/
 */
-import Ember from 'ember';
-
 var ENTITIES_MAP = {
         'nbsp' : 160,
         'iexcl' : 161,
@@ -248,4 +246,4 @@ export function htmlToText(html, extensions) {
     return text;
 }
 
-export default Ember.HTMLBars.makeBoundHelper(htmlToText);
+export default htmlToText;

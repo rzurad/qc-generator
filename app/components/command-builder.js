@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import { htmlToText } from '../helpers/html-to-text';
+import htmlToText from '../utils/html-to-text';
 
 export default Ember.Component.extend({
     tagName: 'li',
@@ -127,7 +127,7 @@ export default Ember.Component.extend({
         validateArgument: function (arg) {
             let instance = this;
 
-            arg.validate().finally(function () {
+            arg.validate().catch(Ember.K).finally(function () {
                 instance.checkInvalidClasses();
             });
         }

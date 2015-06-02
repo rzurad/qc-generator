@@ -2,21 +2,53 @@ import Ember from 'ember';
 import EmberValidations from 'ember-validations';
 
 let Argument;
+
 export default Argument = Ember.Object.extend(Ember.Copyable, EmberValidations.Mixin, {
-    type: null,
+    type: 'argument',
     value: null,
-    values: null,
-    label: 'Argument X',
+    allowedValues: null,
+    label: 'Unnamed Argument',
     'default': null,
+
+    validations: {
+        value: { presence: true }
+    },
+
+    // TODO: It may make more sense for `many` to be on Command models instead of Argument models
     many: false,
 
     init: function () {
-        var type = this.get('type'),
-            validations = this.get('validations'),
-            def = this.get('default');
+        // If there is an inclusion validator, build the allowedValues label/value hash array
+        // so that we can set them as either [{ label: 'X Value', value: 'X' }] or ['X']
+        let inclusion = this.get('validations.value.inclusion.in');
 
-        if (!(type in Argument.TYPES)) {
-            throw new Error('Unrecognized argument type: "' + type + '"');
+        if (inclusion) {
+            let allowedValues = [];
+            let inclusionValues = [];
+
+            inclusion.forEach(function (element, index) {
+                if (typeof element === 'object') {
+                    inclusionValues[index] = element.value;
+                    allowedValues.push({ label: element.label, value: element.value });
+                } else {
+                    inclusionValues[index] = element;
+                    allowedValues.push({ label: element, value: element });
+                }
+            });
+
+            this.set('validations.value.inclusion.in', inclusionValues);
+            this.set('allowedValues', allowedValues);
+        }
+
+        // If a validations object was specified on create, merge it with the default validations
+        // object defined on the instance.
+        let baseValidations = this.container.lookupFactory('model:' + this.get('type')).prototype.validations;
+        let validations = this.get('validations');
+
+        if (validations !== baseValidations) {
+            validations = Ember.$.extend(true, {}, baseValidations, validations);
+
+            this.set('validations', validations);
         }
 
         // EmberValidations will clobber the validations object that you pass into the
@@ -24,32 +56,12 @@ export default Argument = Ember.Object.extend(Ember.Copyable, EmberValidations.M
         // the created object afterwords as an implied private property
         this._validations = validations;
 
-        if (!this.get('value')) {
+        // If there is no value specified and there is a default, set the value to the default value
+        if (this.get('value') === null) {
+            let def = this.get('default');
+
             if (def !== null && def !== void 0) {
                 this.set('value', def);
-            } else {
-                // assign a default value
-                switch (type) {
-                    case Argument.TYPES.bool:
-                        this.set('default', 'no');
-                        this.set('value', 'no');
-                        break;
-                    case Argument.TYPES.int:
-                    case Argument.TYPES.float:
-                        this.set('default', 0);
-                        this.set('value', 0);
-                        break;
-                    case Argument.TYPES.file:
-                    case Argument.TYPES.string:
-                    case Argument.TYPES.qstring:
-                        this.set('default', '');
-                        this.set('value', '');
-                        break;
-                    case Argument.TYPES.enum:
-                        break;
-                    default:
-                        throw new Error('No default value for type "' + type + '"');
-                }
             }
         }
 
@@ -60,25 +72,17 @@ export default Argument = Ember.Object.extend(Ember.Copyable, EmberValidations.M
     },
 
     copy: function () {
-        return Argument.create({
-            type: this.get('type'),
-            values: this.get('values'),
+        return this.container.lookupFactory('model:' + this.get('type')).create({
+            value: this.get('value'),
             label: this.get('label'),
             'default': this.get('default'),
-            many: this.get('many'),
-            validations: this._validations
+            validations: this._validations,
+            allowedValues: this.get('allowedValues'),
+            many: this.get('many')
         });
-    }
-});
+    },
 
-Argument.reopenClass({
-    TYPES: Object.freeze({
-        'int': 'int',
-        'float': 'float',
-        'file': 'file',
-        'bool': 'bool',
-        'string': 'string',
-        'qstring': 'qstring',
-        'enum': 'enum'
-    })
+    toString: function () {
+        return String(this.get('value'));
+    }
 });

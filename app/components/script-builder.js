@@ -46,15 +46,15 @@ export default Ember.Component.extend({
         let arr = [];
 
         this.get('script').forEach(function (cmd) {
-            let output,
+            let string,
                 comment = cmd.get('comment');
 
             if (comment) {
                 arr.push(comment);
             }
 
-            output = cmd.get('output');
-            arr.push(comment ? output + '\r\n' : output);
+            string = cmd.get('string');
+            arr.push(comment ? string + '\r\n' : string);
         });
 
         return arr;
