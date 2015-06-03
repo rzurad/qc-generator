@@ -42,7 +42,7 @@ export default Argument = Ember.Object.extend(Ember.Copyable, EmberValidations.M
 
         // If a validations object was specified on create, merge it with the default validations
         // object defined on the instance.
-        let baseValidations = this.container.lookupFactory('model:' + this.get('type')).prototype.validations;
+        let baseValidations = this.constructor.prototype.validations;
         let validations = this.get('validations');
 
         if (validations !== baseValidations) {
@@ -72,7 +72,7 @@ export default Argument = Ember.Object.extend(Ember.Copyable, EmberValidations.M
     },
 
     copy: function () {
-        return this.container.lookupFactory('model:' + this.get('type')).create({
+        return this.constructor.create({
             value: this.get('value'),
             label: this.get('label'),
             'default': this.get('default'),

@@ -32,11 +32,8 @@
             }}
         {{/each}}
 
-        {{#unless command.required}}
-            <i {{action "drag"}} class="drag-handle fa fa-arrows"></i>
-            <i {{action "deleteCommand"}} class="delete-command fa fa-times"></i>
-        {{/unless}}
-
+        <i {{action "drag"}} class="drag-handle fa fa-arrows"></i>
+        <i {{action "deleteCommand"}} class="delete-command fa fa-times"></i>
         <i {{action "toggleComment"}} class="toggle-comment fa fa-comment"></i>
 
         {{#unless isValid}}

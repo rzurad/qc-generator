@@ -10,6 +10,12 @@ export default Ember.Component.extend({
     isContentEditable: false,
     isCommentVisible: false,
 
+    category: function () {
+        let cat = this.get('command.category');
+
+        return cat && cat.toLowerCase();
+    }.property('command'),
+
     // Used for telling child input-argument components that they should not
     // suppress the fact that an argument is inValid upon creation
     showInitValidationErrors: false,
@@ -25,12 +31,6 @@ export default Ember.Component.extend({
             this.set('isInvalid', !!Ember.$(this.get('element')).find('.is-invalid').length);
         });
     },
-
-    category: function () {
-        let cat = this.get('command.category');
-
-        return cat && cat.toLowerCase();
-    }.property('command'),
 
     onCommandChange: function () {
         this.set('showInitValidationErrors', false);

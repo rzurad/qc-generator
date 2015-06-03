@@ -10,18 +10,16 @@ export default Ember.Component.extend({
     isDownloadAvailable: typeof Blob !== 'undefined',
     filename: 'generated.qc',
     validationTrigger: 0,
-
-    commands: Object.keys(Command.COMMANDS).map(function (key) {
-        return Ember.$.extend(true, {}, Command.COMMANDS[key]);
-    }),
-
     script: [],
+    commands: Object.keys(Command.PREFABS).map(function (key) {
+       return { cmd: key, category: 'wellshit' };
+    }),
 
     change: function (e) {
         let $target = Ember.$(e.target);
 
         if ($target.is('#new-command select')) {
-            this.get('script').pushObject(Command.createByType($target.val()));
+            this.get('script').pushObject(Command.createFromPrefab($target.val()));
             this.set('showNewCommandEditor', false);
         }
     },
@@ -53,7 +51,7 @@ export default Ember.Component.extend({
                 arr.push(comment);
             }
 
-            string = cmd.get('string');
+            string = cmd.toString();
             arr.push(comment ? string + '\r\n' : string);
         });
 
@@ -78,7 +76,7 @@ export default Ember.Component.extend({
                 index = script.indexOf(command);
 
             script.removeAt(index);
-            script.insertAt(index, Command.createByType(type, command.get('comment')));
+            script.insertAt(index, Command.createFromPrefab(type, command.get('comment')));
         },
 
         download: function () {

@@ -1,43 +1,35 @@
 import Ember from 'ember';
 import deepFreeze from '../utils/deep-freeze';
-import Argument from './argument';
+import BoolArgument from './bool-argument';
+import StringArgument from './string-argument';
+import IntArgument from './int-argument';
+import FloatArgument from './float-argument';
+import FileArgument from './file-argument';
+import KeywordArgument from './keyword-argument';
 
-let Command;
 
-export default Command = Ember.Object.extend({
-    cmd: null,
-    category: null,
-    args: [],
-    link: '',
-    help: '',
+let ARGUMENTS = {
+    'string-argument': StringArgument,
+    'bool-argument': BoolArgument,
+    'file-argument': FileArgument,
+    'float-argument': FloatArgument,
+    'int-argument': IntArgument,
+    'keyword-argument': KeywordArgument
+};
 
-    toString: function () {
-        var cmd = this.get('cmd'),
-            args = this.get('args'),
-            arr = [cmd].concat(args.map(function (arg) {
-                return arg.toString();
-            }));
-
-        arr.removeObject('');
-
-        return arr.join(' ');
-    },
-
-    string: function () {
-        return this.toString();
-    }.property('cmd', 'args.@each.value')
-});
-
-let CATEGORIES = deepFreeze({
+let CATEGORIES = {
     animation: 'Animation',
     collision: 'Collision',
     fundamentals: 'Fundamentals',
     textures: 'Textures',
     performance: 'Performance',
     utility: 'Utility'
-});
+};
 
-let COMMANDS = deepFreeze({
+// PREFABS serves as templates for all valid QC commands.
+// Since we want absolutely no chance of anything modifying this object in any
+// way whatsoever during runtime, we will deep freeze it.
+let PREFABS = deepFreeze({
     $sequence: {
         cmd: '$sequence',
         category: CATEGORIES.animation,
@@ -79,7 +71,6 @@ let COMMANDS = deepFreeze({
     },
     $modelname: {
         cmd: '$modelname',
-        required: true,
         category: CATEGORIES.fundamentals,
         args: [{ type: 'file-argument', label: '<folder>\\<modelname>.mdl' }],
         link: 'https://developer.valvesoftware.com/wiki/$modelname',
@@ -136,33 +127,68 @@ let COMMANDS = deepFreeze({
     }
 });
 
-Command.reopenClass({
-    CATEGORIES: CATEGORIES,
-    COMMANDS: COMMANDS,
-    TYPES: (function () {
-        var keys = {};
+let Command = Ember.Object.extend({
+    cmd: null,
+    category: null,
+    args: [],
+    comment: '',
+    link: '',
+    help: '',
 
-        Object.keys(COMMANDS).forEach(function (key) {
+    // TODO: this computed property should go on command component (if it can)
+    string: function () {
+        return this.toString();
+    }.property('cmd', 'args.@each.value'),
+
+    init: function () {
+        this.set('args', this.get('args').map(function (obj) {
+            if (!(obj.type in ARGUMENTS)) {
+                throw new Error('Unknown Argument type: "' + obj.type + '"');
+            }
+
+            return ARGUMENTS[obj.type].create(obj);
+        }));
+
+        this._super();
+    },
+
+    toString: function () {
+        var cmd = this.get('cmd'),
+            args = this.get('args'),
+            arr = [cmd].concat(args.map(function (arg) {
+                return arg.toString();
+            }));
+
+        arr.removeObject('');
+
+        return arr.join(' ');
+    }
+});
+
+Command.reopenClass({
+    ARGUMENTS: ARGUMENTS,
+    CATEGORIES: CATEGORIES,
+    PREFABS: (function () {
+        let keys = {};
+
+        Object.keys(PREFABS).forEach(function (key) {
             keys[key] = key;
         });
 
-        return deepFreeze(keys);
+        return keys;
     }()),
 
-    createByType: function (type, comment) {
-        if (!(type in Command.TYPES)) {
-            throw new Error('Unrecognized command type: "' + type + '"');
+    createFromPrefab: function (cmd, comment) {
+        if (!(cmd in Command.PREFABS)) {
+            throw new Error('Unrecognized command: "' + cmd + '"');
         }
 
-        // COMMANDS is deeply frozen, so create a deep clone of the command schema object
+        // PREFABS is deeply frozen, so create a deep clone of the command schema object
         // so that Ember won't freak out if it tries to add meta properties to it
-        let obj = Command.create(Ember.$.extend(true, {}, Command.COMMANDS[type]));
-
-        obj.set('comment', typeof comment === 'string' ? comment : '');
-        obj.set('args', obj.get('args').map(function (obj) {
-            return Argument.prototype.container.lookupFactory('model:' + obj.type).create(obj);
-        }));
+        let obj = Command.create(Ember.$.extend(true, { comment: comment }, PREFABS[cmd]));
 
         return obj;
     }
 });
+
+export default Command;
