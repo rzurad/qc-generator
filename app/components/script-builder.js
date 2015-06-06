@@ -11,9 +11,11 @@ export default Ember.Component.extend({
     filename: 'generated.qc',
     validationTrigger: 0,
     script: [],
-    commands: Object.keys(Command.PREFABS).map(function (key) {
-       return { cmd: key, category: 'wellshit' };
-    }),
+    commands: (function () {
+        return Object.keys(Command.PREFABS).map(function (key) {
+            return Command.PREFABS[key];
+        });
+    }()),
 
     change: function (e) {
         let $target = Ember.$(e.target);

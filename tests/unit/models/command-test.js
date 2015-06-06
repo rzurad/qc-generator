@@ -1,12 +1,19 @@
+import Ember from 'ember';
 import { moduleFor, test } from 'ember-qunit';
 import Command from '../../../models/command';
+import Argument from '../../../models/argument';
 
 moduleFor('model:command', 'Unit | Model | Command', {
     needs: [
         'ember-validations@validator:local/inclusion',
         'ember-validations@validator:local/presence',
+        'ember-validations@validator:local/format',
         'ember-validations@validator:local/numericality'
-    ]
+    ],
+    beforeEach: function () {
+        // make ember-validations happy (see app/initializers/validations-hack.js for more info)
+        Argument.reopen({ container: this.container });
+    }
 });
 
 test('it exists', function (assert) {
@@ -50,7 +57,7 @@ test('toString works removes extra spaces when argument.toString returns an empt
 });
 
 test('createFromPrefab works', function (assert) {
-    let obj = Command.createFromPrefab(Command.PREFABS.$modelname);
+    let obj = Command.createFromPrefab('$modelname');
 
     assert.strictEqual(obj.get('cmd'), '$modelname', 'cmd works');
     assert.strictEqual(obj.get('category'), Command.CATEGORIES.fundamentals, 'category works');
@@ -60,7 +67,7 @@ test('createFromPrefab works', function (assert) {
 
     let arg = obj.get('args')[0];
 
-    assert.strictEqual(arg.get('type'), 'file-argument', 'file-argument exists');
+    assert.strictEqual(arg.get('type'), 'string-argument', 'string-argument exists');
     assert.strictEqual(arg.get('value'), '', 'default value of argument set');
     assert.strictEqual(arg.get('label'), '<folder>\\<modelname>.mdl', 'label is set');
 });
@@ -74,7 +81,7 @@ test('createFromPrefab accepts comment', function (assert) {
 test('all PREFABS work', function (assert) {
     let keys = Object.keys(Command.PREFABS);
 
-    expect(keys.length);
+    assert.expect(keys.length);
 
     keys.forEach(function (key) {
         assert.ok(Command.createFromPrefab(key) instanceof Command, key + ' works');

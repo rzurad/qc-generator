@@ -72,7 +72,7 @@ let PREFABS = deepFreeze({
     $modelname: {
         cmd: '$modelname',
         category: CATEGORIES.fundamentals,
-        args: [{ type: 'file-argument', label: '<folder>\\<modelname>.mdl' }],
+        args: [{ type: 'string-argument', label: '<folder>\\<modelname>.mdl' }],
         link: 'https://developer.valvesoftware.com/wiki/$modelname',
         help: 'Specifies the path and filename of the compiled model, relative to the <code>\\models</code> folder of the <strong>Game Directory</strong>'
     },
@@ -172,7 +172,7 @@ Command.reopenClass({
         let keys = {};
 
         Object.keys(PREFABS).forEach(function (key) {
-            keys[key] = key;
+            keys[key] = { cmd: key, category: PREFABS[key].category };
         });
 
         return keys;

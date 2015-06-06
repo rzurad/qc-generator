@@ -206,6 +206,21 @@ ul.sections > li > div {
         margin-bottom: 10px;
         min-width: 250px;
 
+        .bool-label {
+            text-transform: capitalize;
+            font-weight: bold;
+        }
+
+        select {
+            width: 50%;
+            display: inline-block;
+        }
+
+        &.bool-argument select {
+            margin-left: 10px;
+            text-transform: capitalize;
+        }
+
         .error-tooltip-anchor {
             position: absolute;
             left: 50%;
@@ -525,11 +540,11 @@ ul.sections > li > div {
 }
 
 .toggle-comment {
-    right: 10px;
+    right: 30px;
 }
 
 .drag-handle {
-    right: 30px;
+    right: 50px;
     cursor: move;
 }
 
@@ -538,7 +553,7 @@ ul.sections > li > div {
         color: @invalid;
     }
 
-    right: 50px;
+    right: 10px;
 }
 
 .error-label {

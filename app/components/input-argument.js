@@ -39,10 +39,11 @@ export default Ember.Component.extend({
     }.on('init'),
 
     onValueChange: function () {
-        let value = this.get('value');
+        try {
+            this.set('argument.value', this.get('value').trim());
+        } catch (e) {}
 
         if (this.get('isTouched')) {
-            this.set('argument.value', value.trim());
             this.requestValidation();
         }
     }.observes('value'),
@@ -85,7 +86,6 @@ export default Ember.Component.extend({
         if ($target.is('input[type="file"]') && e.target.files.length) {
             this.set('value', e.target.files[0].name);
         } else {
-            console.log('set value', Ember.$(e.target).val());
             this.set('value', Ember.$(e.target).val());
         }
     },

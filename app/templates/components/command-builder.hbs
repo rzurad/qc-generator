@@ -32,9 +32,9 @@
             }}
         {{/each}}
 
-        <i {{action "drag"}} class="drag-handle fa fa-arrows"></i>
-        <i {{action "deleteCommand"}} class="delete-command fa fa-times"></i>
+        {{!--<i {{action "drag"}} class="drag-handle fa fa-arrows"></i>--}}
         <i {{action "toggleComment"}} class="toggle-comment fa fa-comment"></i>
+        <i {{action "deleteCommand"}} class="delete-command fa fa-times"></i>
 
         {{#unless isValid}}
             <span class="error-label">ERROR</span>
