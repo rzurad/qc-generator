@@ -1,4 +1,4 @@
-Source Engine QC File Generator
+[Source Engine QC File Generator](http://rzurad.github.io/qc-generator)
 ===
 An [Ember-CLI](http://www.ember-cli.com) app that creates [QC](https://developer.valvesoftware.com/wiki/Qc) scripts for [Valve's](http://valvesoftware.com) [Source engine](https://developer.valvesoftware.com/wiki/Source).
 
