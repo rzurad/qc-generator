@@ -47,4 +47,20 @@ test('toString ignores iKeyValue', function (assert) {
 });
 
 testValidPropertyValues('value', ['yes', 'no']);
-testInvalidPropertyValues('value', ['', true, false, 'true', 'false', '0', '1', 0, 1, 'Yes', 'No', 'YES', 'NO', null, void 0]);
+testInvalidPropertyValues('value', [
+    '',
+    true,
+    false,
+    'true',
+    'false',
+    '0',
+    '1',
+    0,
+    1,
+    'Yes',
+    'No',
+    'YES',
+    'NO',
+    null,
+    void 0
+]);

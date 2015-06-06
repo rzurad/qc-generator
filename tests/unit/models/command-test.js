@@ -24,7 +24,7 @@ test('it exists', function (assert) {
     assert.ok(typeof Command.PREFABS === 'object', 'Class has PREFABS object');
     assert.ok(typeof Command.ARGUMENTS === 'object', 'Class has ARGUMENTS object');
     assert.ok(!Object.isFrozen(Command.ARGUMENTS), 'ARGUMENTS is not frozen');
-    
+
     Command.ARGUMENTS.blah = Ember.Object.extend();
 
     assert.ok(typeof Command.ARGUMENTS.blah === 'function', 'Constructors can be placed on ARGUMENTS');
@@ -53,7 +53,11 @@ test('toString works removes extra spaces when argument.toString returns an empt
         ]
     });
 
-    assert.strictEqual(obj.toString(), '$animation "hi" 123', 'spaces between arguments is correct when an argument gives an empty string');
+    assert.strictEqual(
+        obj.toString(),
+        '$animation "hi" 123',
+        'spaces between arguments is correct when an argument gives an empty string'
+    );
 });
 
 test('createFromPrefab works', function (assert) {

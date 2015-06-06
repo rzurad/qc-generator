@@ -34,10 +34,10 @@ let PREFABS = deepFreeze({
         cmd: '$sequence',
         category: CATEGORIES.animation,
         args: [
-            { type: 'string-argument', label: 'name', 'default': 'idle' },
+            { type: 'string-argument', label: 'name', default: 'idle' },
             { type: 'file-argument', label: '<animation>.smd' },
             { type: 'bool-argument', label: 'loop' },
-            { type: 'float-argument', label: 'fps', isKeyValue: true, 'default': 30 }
+            { type: 'float-argument', label: 'fps', isKeyValue: true, default: 30 }
         ],
         link: 'https://developer.valvesoftware.com/wiki/$sequence',
         help: 'Defines a skeletal animation for an SMD model<br><br>Required for all props'
@@ -88,19 +88,26 @@ let PREFABS = deepFreeze({
         category: CATEGORIES.textures,
         args: [{ type: 'string-argument', label: 'Materials folder path', many: true }],
         link: 'https://developer.valvesoftware.com/wiki/$cdmaterials',
-        help: 'Defines the folders in which the game will search for the model\'s materials relative to <code>&lt;game&gt;\\materials\\</code><br><br>Subfolders are not searched'
+        help: [
+            'Defines the folders in which the game will search for the model\'s materials relative to',
+            '<code>&lt;game&gt;\\materials\\</code><br><br>Subfolders are not searched'
+        ].join(' ')
     },
     $surfaceprop: {
         cmd: '$surfaceprop',
         category: CATEGORIES.textures,
         args: [{ type: 'string-argument', label: 'name' }],
         link: 'https://developer.valvesoftware.com/wiki/Material_surface_properties',
-        help: 'Links the surface of either a <code>material</code> or <code>model</code> to a set of physical properties.<br><br>Must be a value defined in the <code>surfaceproperties_manifest</code> text file'
+        help: [
+            'Links the surface of either a <code>material</code> or <code>model</code> to a set of physical',
+            'properties.<br><br>Must be a value defined in the <code>surfaceproperties_manifest</code>',
+            'text file'
+        ].join(' ')
     },
     $scale: {
         cmd: '$scale',
         category: CATEGORIES.utility,
-        args: [{ type: 'float-argument', label: 'Multiplier', 'default': 1 }],
+        args: [{ type: 'float-argument', label: 'Multiplier', default: 1 }],
         link: 'https://developer.valvesoftware.com/wiki/$scale',
         help: 'Multiplies the size of all subsequent SMDs'
     },
@@ -110,7 +117,7 @@ let PREFABS = deepFreeze({
         args: [{
             type: 'keyword-argument',
             label: 'Axis',
-            'default': 'Z',
+            default: 'Z',
             validations: {
                 value: {
                     inclusion: {

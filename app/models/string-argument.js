@@ -4,7 +4,7 @@ let StringArgument;
 
 export default StringArgument = Argument.extend({
     type: 'string-argument',
-    'default': '',
+    default: '',
 
     validations: {
         value: { presence: true }

@@ -27,12 +27,10 @@ export default Ember.Component.extend({
     },
 
     validate: function () {
-        let instance = this;
+        return new Ember.RSVP.Promise((resolve, reject) => {
+            this.incrementProperty('validationTrigger');
 
-        return new Ember.RSVP.Promise(function (resolve, reject) {
-            instance.incrementProperty('validationTrigger');
-
-            Ember.run.scheduleOnce('afterRender', instance, function () {
+            Ember.run.scheduleOnce('afterRender', this, function () {
                 if (Ember.$(this.get('element')).find('.is-invalid').length) {
                     reject();
                 } else {
@@ -82,11 +80,9 @@ export default Ember.Component.extend({
         },
 
         download: function () {
-            let instance = this;
-
-            this.validate().then(function () {
-                let script = instance.toString(),
-                    filename = instance.get('filename');
+            this.validate().then(() => {
+                let script = this.toString(),
+                    filename = this.get('filename');
 
                 saveAs(new Blob([script], { type: 'text/plain;charset=utf-8' }), filename);
             }, function () {
@@ -101,7 +97,11 @@ export default Ember.Component.extend({
 
             this.validate().then(function () {
                 if (document.queryCommandSupported('copy')) {
-                    let event = new ClipboardEvent('copy', { dataType: 'text/plain', data: 'hello from the clipboard!' });
+                    let event = new ClipboardEvent('copy', {
+                        dataType: 'text/plain',
+                        data: 'hello from the clipboard!'
+                    });
+
                     document.dispatchEvent(event);
                     showTooltip('success');
                 } else {

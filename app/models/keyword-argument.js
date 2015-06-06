@@ -4,7 +4,7 @@ let KeywordArgument;
 
 export default KeywordArgument = Argument.extend({
     type: 'keyword-argument',
-    'default': '',
+    default: '',
 
     validations: {
         value: {

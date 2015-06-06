@@ -33,7 +33,7 @@ test('can create', function (assert) {
 });
 
 test('value is assigned default when given on create', function (assert) {
-    let obj = this.subject({ 'default': 42 });
+    let obj = this.subject({ default: 42 });
 
     assert.strictEqual(obj.get('value'), 42, 'default value is set correctly when given on create');
 });
@@ -43,7 +43,7 @@ test('toString returns value cast to a string', function (assert) {
 });
 
 test('toString returns key/value-pair arguments correctly', function (assert) {
-    let obj = this.subject({ 'default': 42, isKeyValue: true, label: 'meaning' });
+    let obj = this.subject({ default: 42, isKeyValue: true, label: 'meaning' });
 
     assert.strictEqual(obj.toString(), 'meaning 42', 'key/value pair arguments are rendered correctly');
 });
@@ -63,7 +63,7 @@ test('validations given on create stack with base validations', function (assert
 
         assert.strictEqual(errors.length, 2, 'two errors exist');
         assert.ok(errors.indexOf("can't be blank") > -1, 'presence error exists');
-        assert.ok(errors.indexOf("is not a number") > -1, 'numericality error exists');
+        assert.ok(errors.indexOf('is not a number') > -1, 'numericality error exists');
     });
 });
 
@@ -135,7 +135,7 @@ test('can copy', function (assert) {
     let obj1 = this.subject({
             value: 42,
             label: 'zomg',
-            'default': 93,
+            default: 93,
             validations: { value: { inclusion: { in: [42, 93] } } },
             many: true
         });

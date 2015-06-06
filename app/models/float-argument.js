@@ -4,7 +4,7 @@ let FloatArgument;
 
 export default FloatArgument = Argument.extend({
     type: 'float-argument',
-    'default': 0,
+    default: 0,
 
     validations: {
         value: { presence: true, numericality: true }

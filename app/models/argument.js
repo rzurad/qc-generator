@@ -9,7 +9,7 @@ export default Argument = Ember.Object.extend(Ember.Copyable, EmberValidations.M
     allowedValues: null,
     isKeyValue: false,
     label: 'Unnamed Argument',
-    'default': null,
+    default: null,
 
     validations: {
         value: { presence: true }
@@ -53,8 +53,8 @@ export default Argument = Ember.Object.extend(Ember.Copyable, EmberValidations.M
         }
 
         // EmberValidations will clobber the validations object that you pass into the
-        // `create` function, so in order to preserve it for potential object cloning later, we'll tack it onto
-        // the created object afterwords as an implied private property
+        // `create` function, so in order to preserve it for potential object cloning later, we'll tack
+        // it onto the created object afterwords as an implied private property
         this._validations = validations;
 
         // If there is no value specified and there is a default, set the value to the default value
@@ -76,7 +76,7 @@ export default Argument = Ember.Object.extend(Ember.Copyable, EmberValidations.M
         return this.constructor.create({
             value: this.get('value'),
             label: this.get('label'),
-            'default': this.get('default'),
+            default: this.get('default'),
             validations: this._validations,
             allowedValues: this.get('allowedValues'),
             many: this.get('many')

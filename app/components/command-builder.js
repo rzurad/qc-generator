@@ -125,10 +125,10 @@ export default Ember.Component.extend({
         },
 
         validateArgument: function (arg) {
-            let instance = this;
+            let _this = this;
 
-            arg.validate().catch(Ember.K).finally(function () {
-                instance.checkInvalidClasses();
+            arg.validate().catch(Ember.K).finally(() => {
+                _this.checkInvalidClasses();
             });
         }
     }

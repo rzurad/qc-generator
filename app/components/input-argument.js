@@ -51,7 +51,7 @@ export default Ember.Component.extend({
     checkErrorTooltip: function () {
         let current = this.get('showErrorTooltip'),
             computed = this.get('isInvalid') && this.get('isInputFocused');
-            
+
         if (current !== computed) {
             let str = computed ? 'show' : 'hide';
 
@@ -81,6 +81,7 @@ export default Ember.Component.extend({
 
     change: function (e) {
         let $target = Ember.$(e.target);
+
         this.set('isTouched', true);
 
         if ($target.is('input[type="file"]') && e.target.files.length) {

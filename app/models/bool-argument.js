@@ -4,7 +4,7 @@ let BoolArgument;
 
 export default BoolArgument = Argument.extend({
     type: 'bool-argument',
-    'default': 'yes',
+    default: 'yes',
 
     validations: {
         value: { inclusion: { in: ['yes', 'no'] } }
