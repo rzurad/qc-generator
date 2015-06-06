@@ -75,7 +75,7 @@ let PREFABS = deepFreeze({
         category: CATEGORIES.fundamentals,
         args: [{ type: 'string-argument', label: '<folder>\\<modelname>.mdl' }],
         link: 'https://developer.valvesoftware.com/wiki/$modelname',
-        help: 'Specifies the path and filename of the compiled model, relative to the <code>\\models</code> folder of the <strong>Game Directory</strong>'
+        help: 'Define your new model\'s name and its location relative to <code>&lt;game&gt;\\models</code>'
     },
     $staticprop: {
         cmd: '$staticprop',

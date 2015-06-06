@@ -2,7 +2,7 @@
 
 module.exports = function(environment) {
     var ENV = {
-            version: '0.0.0',
+            version: '0.3.0',
             modulePrefix: 'qc',
             environment: environment,
             baseURL: '/',
