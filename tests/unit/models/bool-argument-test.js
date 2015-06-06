@@ -38,5 +38,13 @@ test('toString returns empty string if value is no', function (assert) {
     );
 });
 
+test('toString ignores iKeyValue', function (assert) {
+    assert.strictEqual(
+        this.subject({ label: 'hello', isKeyValue: true }).toString(),
+        'hello',
+        'toString ignores isKeyValue'
+    );
+});
+
 testValidPropertyValues('value', ['yes', 'no']);
 testInvalidPropertyValues('value', ['', true, false, 'true', 'false', '0', '1', 0, 1, 'Yes', 'No', 'YES', 'NO', null, void 0]);

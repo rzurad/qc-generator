@@ -42,6 +42,12 @@ test('toString returns value cast to a string', function (assert) {
     assert.strictEqual(this.subject({ value: 42 }).toString(), '42', 'toString works');
 });
 
+test('toString returns key/value-pair arguments correctly', function (assert) {
+    let obj = this.subject({ 'default': 42, isKeyValue: true, label: 'meaning' });
+
+    assert.strictEqual(obj.toString(), 'meaning 42', 'key/value pair arguments are rendered correctly');
+});
+
 test('validations given on create stack with base validations', function (assert) {
     let obj = this.subject({
             value: '',

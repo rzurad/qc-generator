@@ -34,6 +34,12 @@ test('toString escapes double-quotes', function (assert) {
     assert.strictEqual(obj.toString(), '"som\\"thing"', 'double-quotes are escaped');
 });
 
+test('toString works for isKeyValue', function (assert) {
+    let obj = this.subject({ value: 'never change', label: 'some_things', isKeyValue: true });
+
+    assert.strictEqual(obj.toString(), 'some_things "never change"', 'toString works for isKeyValue');
+});
+
 testValidPropertyValues(
     'value',
     ['a', 'qwertyuiopasdfghjklzxcvbnm', '1234567890', '!@#$%^&*()_+=-{}[];\':",.<>/?]`~\\ |']

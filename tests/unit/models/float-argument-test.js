@@ -41,5 +41,11 @@ test('toString returns a stringified float to 8 precision points', function (ass
     assert.strictEqual(obj.toString(), '-3.14', 'toString converts negatives');
 });
 
+test('toString handles isKeyValue correctly', function (assert) {
+    let obj = this.subject({ value: Math.PI, label: 'pie', isKeyValue: true });
+
+    assert.strictEqual(obj.toString(), 'pie 3.14159265');
+});
+
 testValidPropertyValues('value', [1234, 0, -324, 0xff, 1.23e4, Math.PI, -Math.E, 1.337]);
 testInvalidPropertyValues('value', [null, NaN, '', void 0, 'bad', false, Infinity]);

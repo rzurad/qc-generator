@@ -2,7 +2,7 @@ import Ember from 'ember';
 
 export default Ember.Component.extend({
     classNames: ['argument'],
-    classNameBindings: ['argument.type', 'isInvalid'],
+    classNameBindings: ['argument.type', 'isInvalid', 'argument.isKeyValue'],
     argument: null,
     value: '',
 

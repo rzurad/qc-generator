@@ -206,9 +206,15 @@ ul.sections > li > div {
         margin-bottom: 10px;
         min-width: 250px;
 
-        .bool-label {
-            text-transform: capitalize;
+        &.is-key-value input {
+            width: 50%;
+            display: inline-block;
+        }
+
+        .arg-label {
+            display: inline-block;
             font-weight: bold;
+            width: 50px;
         }
 
         select {
@@ -217,7 +223,6 @@ ul.sections > li > div {
         }
 
         &.bool-argument select {
-            margin-left: 10px;
             text-transform: capitalize;
         }
 

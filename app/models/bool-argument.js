@@ -6,11 +6,11 @@ export default BoolArgument = Argument.extend({
     type: 'bool-argument',
     'default': 'yes',
 
-    toString: function () {
-        return this.get('value') === 'yes' ? this.get('label') : '';
-    },
-
     validations: {
         value: { inclusion: { in: ['yes', 'no'] } }
+    },
+
+    toString: function () {
+        return this.get('value') === 'yes' ? this.get('label') : '';
     }
 });

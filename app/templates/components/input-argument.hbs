@@ -1,4 +1,9 @@
+{{#if argument.isKeyValue}}
+    <span class="arg-label">{{ argument.label }}:</span>
+{{/if}}
+
 {{partial argument.type}}
+
 <i class="error-tooltip-anchor fa fa-remove" data-toggle="tooltip" title={{ errors }}></i>
 
 {{#if argument.many}}

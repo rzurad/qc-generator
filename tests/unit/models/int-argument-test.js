@@ -41,5 +41,11 @@ test('toString returns a stringified integer', function (assert) {
     assert.strictEqual(obj.toString(), '-42', 'toString converts negatives');
 });
 
+test('toString works for isKeyValue', function (assert) {
+    let obj = this.subject({ label: 'pie', value: 3, isKeyValue: true });
+
+    assert.strictEqual(obj.toString(), 'pie 3', 'toString works for isKeyValue');
+});
+
 testValidPropertyValues('value', [1234, 0, -324, 0xff, 1.23e4]);
 testInvalidPropertyValues('value', [null, NaN, '', void 0, 3.141, 'bad', false, Infinity]);

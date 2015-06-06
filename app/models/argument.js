@@ -7,6 +7,7 @@ export default Argument = Ember.Object.extend(Ember.Copyable, EmberValidations.M
     type: 'argument',
     value: null,
     allowedValues: null,
+    isKeyValue: false,
     label: 'Unnamed Argument',
     'default': null,
 
@@ -83,6 +84,12 @@ export default Argument = Ember.Object.extend(Ember.Copyable, EmberValidations.M
     },
 
     toString: function () {
-        return String(this.get('value'));
+        let arg = [String(this.get('value'))];
+
+        if (this.get('isKeyValue')) {
+            arg.unshift(this.get('label'));
+        }
+
+        return arg.join(' ');
     }
 });

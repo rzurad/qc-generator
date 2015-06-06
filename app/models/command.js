@@ -36,7 +36,8 @@ let PREFABS = deepFreeze({
         args: [
             { type: 'string-argument', label: 'name', 'default': 'idle' },
             { type: 'file-argument', label: '<animation>.smd' },
-            { type: 'bool-argument', label: 'loop' }
+            { type: 'bool-argument', label: 'loop' },
+            { type: 'float-argument', label: 'fps', isKeyValue: true, 'default': 30 }
         ],
         link: 'https://developer.valvesoftware.com/wiki/$sequence',
         help: 'Defines a skeletal animation for an SMD model<br><br>Required for all props'
