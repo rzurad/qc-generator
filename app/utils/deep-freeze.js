@@ -1,10 +1,8 @@
 export function deepFreeze(obj) {
-    var prop, propKey;
-
     Object.freeze(obj); // First freeze the object.
 
-    for (propKey in obj) {
-        prop = obj[propKey];
+    for (let propKey in obj) {
+        let prop = obj[propKey];
 
         if (!obj.hasOwnProperty(propKey) || typeof prop !== 'object' || Object.isFrozen(prop)) {
             // If the object is on the prototype, not an object, or is already frozen,
