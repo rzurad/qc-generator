@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import Argument from '../models/argument';
 
 export default Ember.Component.extend({
     classNames: ['argument'],
@@ -17,17 +18,9 @@ export default Ember.Component.extend({
     isInputFocused: false,
     showErrorTooltip: false,
 
-    onErrorTooltipConditionChange: function () {
-        Ember.run.scheduleOnce('afterRender', this, this.checkErrorTooltip);
-    }.observes('isInvalid', 'isInputFocused'),
-
     isInvalid: function () {
         return this.get('isTouched') && !this.get('argument.isValid');
     }.property('argument.isValid', 'isTouched'),
-
-    onShowInitValidationErrorsChange: function () {
-        this.set('isTouched', true);
-    }.observes('showInitValidationErrors'),
 
     requestValidation: function () {
         this.set('isTouched', true);
@@ -35,9 +28,12 @@ export default Ember.Component.extend({
     },
 
     onInit: function () {
-        this.set('value', String(this.get('argument.value')));
+        if (this.get('argument') instanceof Argument) {
+            this.set('value', String(this.get('argument.value')));
+        }
     }.on('init'),
 
+/* ========= */
     onValueChange: function () {
         try {
             this.set('argument.value', this.get('value').trim());
@@ -47,6 +43,14 @@ export default Ember.Component.extend({
             this.requestValidation();
         }
     }.observes('value'),
+
+    onErrorTooltipConditionChange: function () {
+        Ember.run.scheduleOnce('afterRender', this, this.checkErrorTooltip);
+    }.observes('isInvalid', 'isInputFocused'),
+
+    onShowInitValidationErrorsChange: function () {
+        this.set('isTouched', true);
+    }.observes('showInitValidationErrors'),
 
     checkErrorTooltip: function () {
         let current = this.get('showErrorTooltip'),
@@ -59,6 +63,7 @@ export default Ember.Component.extend({
             Ember.$(this.get('element')).find('.error-tooltip-anchor').tooltip(str);
         }
     },
+/* -------- */
 
     actions: {
         add: function () {
@@ -69,16 +74,19 @@ export default Ember.Component.extend({
             this.sendAction('remove', this.get('argument'));
         },
 
+        // TODO: acceptance test
         blur: function () {
             this.requestValidation();
             this.set('isInputFocused', false);
         },
 
+        // TODO: acceptance test
         focus: function () {
             this.set('isInputFocused', true);
         }
     },
 
+    // TODO: acceptance test
     change: function (e) {
         let $target = Ember.$(e.target);
 
@@ -87,10 +95,11 @@ export default Ember.Component.extend({
         if ($target.is('input[type="file"]') && e.target.files.length) {
             this.set('value', e.target.files[0].name);
         } else {
-            this.set('value', Ember.$(e.target).val());
+            this.set('value', $target.val());
         }
     },
 
+    // TODO: acceptance test
     keyDown: function () {
         this.set('isTouched', true);
     }

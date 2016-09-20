@@ -2,7 +2,9 @@
     <span class="arg-label">{{ argument.label }}:</span>
 {{/if}}
 
-{{partial argument.type}}
+{{#if argument}}
+    {{partial argument.type}}
+{{/if}}
 
 <i class="error-tooltip-anchor fa fa-remove" data-toggle="tooltip" title={{ errors }}></i>
 
